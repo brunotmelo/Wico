@@ -21,11 +21,11 @@
         android:layout_alignParentStart="true" />
 
 
-    <!--fragment android:name="com.wico.ui.fragments.QuestionListFragment"
-    android:id="@+id/headlines_fragment"
-    android:layout_weight="1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" /-->
+    <fragment
+        android:id="@+id/headlines_fragment"
+        android:name="com.wico.ui.fragments.QuestionListFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
     <!--SearchView

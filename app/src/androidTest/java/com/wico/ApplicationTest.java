@@ -13,11 +13,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
-    protected TestResult createResult() {
-        return super.createResult();
+    public void test() throws Exception {
+        final int expected = 1;
+        final int reality = 1;
+        assertEquals(expected, reality);
     }
-
-    public void
 
 
 

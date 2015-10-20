@@ -14,7 +14,11 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.wico.R;
+import com.wico.datatypes.Question;
 import com.wico.ui.dummy.DummyContent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -75,9 +79,16 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        //used arraylist to create the list
+        ArrayList<Question> questionList = new ArrayList<>();
+
+        questionList.add(new Question("title","content"));
+        questionList.add(new Question("title2","content2"));
+
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new QuestionListAdapter(getActivity(),android.R.id.text1,questionList);
+//        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+//                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
     }
 
     @Override

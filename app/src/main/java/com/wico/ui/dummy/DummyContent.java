@@ -46,10 +46,10 @@ public class DummyContent {
         public String content;
 
         public DummyItem(String id, Question question) {
-            question = new Question();
+            question = new Question("is course good?", "i was wondering if the course was good, and if i would have to work a lot.");
             this.id = id;
             this.title = question.getTitle();
-            this.content = question.getQuestion();
+            this.content = question.getContent();
         }
 
         @Override
