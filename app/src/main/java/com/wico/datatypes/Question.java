@@ -1,34 +1,33 @@
 package com.wico.datatypes;
 
-import android.util.Log;
+public final class Question {
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+    private final String title, content;
 
-import java.util.ArrayList;
-import java.util.List;
+    public static final class Builder {
+        private String title;
+        private String content;
 
-public class Question {
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
 
-    String title;
-    String content;
-    ArrayList<Answer> awnsers;
+        public Builder content(String content) {
+            this.content = content;
+            return this;
+        }
 
-
-    public Question(String title, String content) {
-        this.title = title;
-        this. content = content;
+        public Question build() {
+            return new Question(this);
+        }
     }
 
-    public void addAwnser(Answer answer){
-        awnsers.add(answer);
+    private Question(Builder builder) {
+        this.title = builder.title;
+        this.content = builder.content;
     }
 
-    public void removeAwnser(int index){
-        awnsers.remove(index);
-    }
 
 
     public String getTitle() {

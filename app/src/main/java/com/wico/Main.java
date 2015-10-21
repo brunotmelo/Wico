@@ -47,10 +47,6 @@ public class Main extends AppCompatActivity {
     }
 
     private void connectToParse(){
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
-        connectText.setText("Connected to parse");
-        connectText.setTextColor(Color.GREEN);
     }
 
     private void testStorage(){
