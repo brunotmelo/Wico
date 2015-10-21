@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.createQuestion"
+            android:name=".ui.CreateQuestionActivity"
             android:label="@string/title_activity_create_question"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>

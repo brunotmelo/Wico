@@ -80,7 +80,9 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         }
 
         //used arraylist to create the list
-        ArrayList<Question> questionList = new ArrayList<>();
+
+
+        ArrayList<Question> questionList
 
         questionList.add(new Question("title","content"));
         questionList.add(new Question("title2","content2"));

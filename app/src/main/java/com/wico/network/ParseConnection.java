@@ -6,8 +6,10 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.wico.datatypes.Answer;
 import com.wico.datatypes.Question;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,12 +18,21 @@ import java.util.List;
 public class ParseConnection {
 
 
-    public void storeQuestion(){
+    public void storeQuestion() {
+        Question testQuestion = new Question(null, null);
+        ParseObject parseQuestion = new ParseObject("testQuestion");
+        parseQuestion.put("testQuetion", testQuestion);
+        parseQuestion.saveInBackground();
+
+
+
     }
 
-    public Question getQuestion(){
+    public ArrayList<Question> getQuestions(){
         return null;
     }
+
+
 
     /*private void testQuestionStorage(){
         Question testQuestion = new Question(content, title);

@@ -1,5 +1,6 @@
 package com.wico;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.wico.ui.CreateQuestionActivity;
 
 public class Main extends AppCompatActivity {
 
@@ -27,12 +29,14 @@ public class Main extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //set action button background
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
         int btncolor = getResources().getColor(R.color.colorAccent);
         fab.setBackgroundTintList(ColorStateList.valueOf(btncolor));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CreateQuestionActivity.class);
+                startActivity(intent);
 
             }
         });
