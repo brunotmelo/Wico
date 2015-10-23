@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.wico.datatypes.Question;
 import com.wico.ui.CreateQuestionActivity;
 
 public class Main extends AppCompatActivity {
@@ -23,6 +24,7 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        connectToParse();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -42,11 +44,14 @@ public class Main extends AppCompatActivity {
         });
 
         connectText = (TextView) findViewById(R.id.connectmessage);
-        //connectToParse();
+
         //testStorage();
     }
 
     private void connectToParse(){
+        Parse.enableLocalDatastore(this);
+        ParseObject.registerSubclass(Question.class);
+        Parse.initialize(this, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
     }
 
     private void testStorage(){

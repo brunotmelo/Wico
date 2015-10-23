@@ -1,8 +1,10 @@
 package com.wico.datatypes;
 
-public final class Question {
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
 
-    private final String title, content;
+@ParseClassName("Question")
+public final class Question extends ParseObject{
 
     public static final class Builder {
         private String title;
@@ -23,19 +25,20 @@ public final class Question {
         }
     }
 
+    public Question(){
+        //this method required to use it as a parseObject
+    }
     private Question(Builder builder) {
-        this.title = builder.title;
-        this.content = builder.content;
+        put("title", builder.title);
+        put("content",builder.content);
     }
 
-
-
     public String getTitle() {
-        return title;
+        return getString("title");
     }
 
     public String getContent() {
-        return content;
+        return getString("content");
     }
 
     public int getNumOfAwnsers(){

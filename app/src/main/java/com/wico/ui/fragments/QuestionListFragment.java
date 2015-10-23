@@ -1,6 +1,5 @@
 package com.wico.ui.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -9,16 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
-import com.wico.ui.dummy.DummyContent;
+import com.wico.network.ParseConnector;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -82,10 +79,12 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         //used arraylist to create the list
 
 
-        ArrayList<Question> questionList = new ArrayList<>();
+        ParseConnector parse = new ParseConnector();
+        //parse.queryContent();
+        ArrayList<Question> questionList = parse.getQuestions();
 
-        questionList.add(new Question("title","content"));
-        questionList.add(new Question("title2","content2"));
+      /*  questionList.add(new Question("title","content"));
+        questionList.add(new Question("title2","content2"));*/
 
         // TODO: Change Adapter to display your content
         mAdapter = new QuestionListAdapter(getActivity(),android.R.id.text1,questionList);
@@ -106,6 +105,15 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         mListView.setOnItemClickListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        ParseConnector parse = new ParseConnector();
+        ArrayList<Question> questionList = parse.getQuestions();
+
+        mAdapter = new QuestionListAdapter(getActivity(), android.R.id.text1, questionList);
     }
 
     @Override
@@ -130,7 +138,7 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
         }
     }
 

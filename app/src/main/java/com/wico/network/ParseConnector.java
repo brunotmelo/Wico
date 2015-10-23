@@ -1,48 +1,43 @@
 package com.wico.network;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
-import com.wico.datatypes.Answer;
 import com.wico.datatypes.Question;
+import com.wico.exceptions.WicoParseException;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ParseConnection {
+public class ParseConnector {
 
 
-    public ParseConnection(Context context){
-        Parse.enableLocalDatastore(context);
-        Parse.initialize(context, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
+    public ParseConnector(){
     }
 
     public void storeQuestion(Question question){
-        ParseObject testObject = new ParseObject("Question");
-        testObject.put("title", question.getTitle());
-        testObject.put("content", question.getContent());
-        testObject.saveInBackground(new SaveCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    //objectSavedSuccessfully();
-                } else {
-                    //objectSaveDidNotSucceed();
-                }
-            }
-        });;
-
+        try {
+            question.save();
+        } catch (ParseException e) {
+            throw new WicoParseException();
+        }
     }
 
 
 
     public ArrayList<Question> getQuestions(){
-        return null;
+        ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
+        query.whereExists("content");
+        query.orderByDescending("createdAt");
+        ArrayList<Question> questions = new ArrayList<>();
+        try{
+           questions.addAll(query.find());
+        }catch (ParseException e) {
+            throw new WicoParseException();
+        }
+
+        return questions;
+
     }
 
 
