@@ -1,18 +1,24 @@
 package com.wico.ui;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
-import com.wico.network.ParseConnector;
+import com.wico.ui.threads.QuestionSaver;
 
 public class CreateQuestionActivity extends AppCompatActivity {
+
+    private FloatingActionButton sendButton;
+    private ProgressBar spinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,20 +27,18 @@ public class CreateQuestionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        spinner = (ProgressBar)findViewById(R.id.savingQuestionProgressBar);
+        sendButton = (FloatingActionButton) findViewById(R.id.fab);
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveQuestion();
-                openMainScreen();
             }
         });
     }
@@ -43,13 +47,27 @@ public class CreateQuestionActivity extends AppCompatActivity {
         String title = getUiTitle();
         String content = getUiContent();
         Question question = new Question.Builder().title(title).content(content).build();
-        ParseConnector parse = new ParseConnector();
-        parse.storeQuestion(question);
+        QuestionSaver qs = new QuestionSaver(this,question);
+        qs.run();
+        savingQuestion();
+    }
+
+    private void savingQuestion(){
+        sendButton.setEnabled(false);
+        spinner.setVisibility(View.VISIBLE);
+    }
+
+    public void onQuestionSaved(){
+        spinner.setVisibility(View.GONE);
+        openMainScreen();
     }
 
     private void openMainScreen(){
         onBackPressed();
     }
+
+
+
 
     private String getUiTitle(){
         EditText title = (EditText) findViewById(R.id.titleEditText);
