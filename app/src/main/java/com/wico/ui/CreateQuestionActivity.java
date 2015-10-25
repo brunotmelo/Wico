@@ -1,15 +1,13 @@
 package com.wico.ui;
 
-import android.content.Intent;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.wico.Main;
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
@@ -36,6 +34,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveQuestion();
+                openMainScreen();
             }
         });
     }
@@ -46,8 +45,6 @@ public class CreateQuestionActivity extends AppCompatActivity {
         Question question = new Question.Builder().title(title).content(content).build();
         ParseConnector parse = new ParseConnector();
         parse.storeQuestion(question);
-
-        openMainScreen();
     }
 
     private void openMainScreen(){
@@ -56,7 +53,6 @@ public class CreateQuestionActivity extends AppCompatActivity {
 
     private String getUiTitle(){
         EditText title = (EditText) findViewById(R.id.titleEditText);
-        System.out.println(title.getText().toString());
         return title.getText().toString();
     }
 

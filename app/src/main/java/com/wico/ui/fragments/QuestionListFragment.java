@@ -112,8 +112,8 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         super.onResume();
         ParseConnector parse = new ParseConnector();
         ArrayList<Question> questionList = parse.getQuestions();
-
         mAdapter = new QuestionListAdapter(getActivity(), android.R.id.text1, questionList);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override

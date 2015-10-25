@@ -1,5 +1,6 @@
-package com.wico;
+package com.wico.ui;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.ui.CreateQuestionActivity;
 
@@ -43,7 +45,7 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        connectText = (TextView) findViewById(R.id.connectmessage);
+        //connectText = (TextView) findViewById(R.id.connectmessage);
 
         //testStorage();
     }
@@ -58,6 +60,14 @@ public class Main extends AppCompatActivity {
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Fragment frag = getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
+        //frag.onResume();
+
     }
 
     @Override
@@ -81,4 +91,5 @@ public class Main extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
