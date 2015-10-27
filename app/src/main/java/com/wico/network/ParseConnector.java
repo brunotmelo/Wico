@@ -11,10 +11,6 @@ import java.util.ArrayList;
 
 public class ParseConnector {
 
-    public ParseConnector(){
-
-    }
-
     public void storeQuestion(Question question){
         try {
             question.save();

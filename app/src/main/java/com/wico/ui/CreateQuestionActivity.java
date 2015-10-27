@@ -12,19 +12,17 @@ import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.ui.threads.QuestionSaver;
 
-public class CreateQuestionActivity extends AppCompatActivity {
+public class CreateQuestionActivity extends AppCompatActivity{
 
     private FloatingActionButton sendButton;
-    private ProgressBar spinner;
-
+    private ProgressBar spinningProgressBar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_question);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,7 +30,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        spinner = (ProgressBar)findViewById(R.id.savingQuestionProgressBar);
+        spinningProgressBar = (ProgressBar)findViewById(R.id.savingQuestionProgressBar);
         sendButton = (FloatingActionButton) findViewById(R.id.fab);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,8 +44,8 @@ public class CreateQuestionActivity extends AppCompatActivity {
         String title = getUiTitle();
         String content = getUiContent();
         Question question = new Question.Builder().title(title).content(content).build();
-        QuestionSaver qs = new QuestionSaver(this,question);
-        qs.run();
+        QuestionSaver questionSaver = new QuestionSaver(this,question);
+        questionSaver.run();
         savingQuestion();
     }
 
@@ -63,11 +61,11 @@ public class CreateQuestionActivity extends AppCompatActivity {
 
     private void savingQuestion(){
         sendButton.setEnabled(false);
-        spinner.setVisibility(View.VISIBLE);
+        spinningProgressBar.setVisibility(View.VISIBLE);
     }
 
     public void onQuestionSaved(){
-        spinner.setVisibility(View.GONE);
+        spinningProgressBar.setVisibility(View.GONE);
         openMainScreen();
     }
 

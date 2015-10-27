@@ -16,33 +16,26 @@ import com.parse.ParseObject;
 import com.wico.R;
 import com.wico.datatypes.Question;
 
-public class Main extends AppCompatActivity {
+public class Main extends AppCompatActivity{
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         connectToParse();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //set action button background
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
-        int btncolor = ContextCompat.getColor(this, R.color.colorAccent);
-        fab.setBackgroundTintList(ColorStateList.valueOf(btncolor));
-        fab.setOnClickListener(new View.OnClickListener() {
+        int buttonColor = ContextCompat.getColor(this, R.color.colorAccent);
+        fab.setBackgroundTintList(ColorStateList.valueOf(buttonColor));
+        fab.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(), CreateQuestionActivity.class);
                 startActivity(intent);
-
             }
         });
-
-        //connectText = (TextView) findViewById(R.id.connectmessage);
-
-        //testStorage();
     }
 
     private void connectToParse(){
@@ -51,40 +44,24 @@ public class Main extends AppCompatActivity {
         Parse.initialize(this, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
     }
 
-    private void testStorage(){
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-    }
-
     @Override
     public void onResume(){
         super.onResume();
-        //Fragment frag = getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
-        //frag.onResume();
-
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+    public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings){
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+         return super.onOptionsItemSelected(item);
     }
 
 }
