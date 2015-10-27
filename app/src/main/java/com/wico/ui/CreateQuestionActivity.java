@@ -5,10 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
@@ -26,6 +24,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_question);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +51,16 @@ public class CreateQuestionActivity extends AppCompatActivity {
         savingQuestion();
     }
 
+    private String getUiTitle(){
+        EditText title = (EditText) findViewById(R.id.titleEditText);
+        return title.getText().toString();
+    }
+
+    private String getUiContent(){
+        EditText content = (EditText) findViewById(R.id.contentEditText);
+        return content.getText().toString();
+    }
+
     private void savingQuestion(){
         sendButton.setEnabled(false);
         spinner.setVisibility(View.VISIBLE);
@@ -64,19 +73,6 @@ public class CreateQuestionActivity extends AppCompatActivity {
 
     private void openMainScreen(){
         onBackPressed();
-    }
-
-
-
-
-    private String getUiTitle(){
-        EditText title = (EditText) findViewById(R.id.titleEditText);
-        return title.getText().toString();
-    }
-
-    private String getUiContent(){
-        EditText content = (EditText) findViewById(R.id.contentEditText);
-        return content.getText().toString();
     }
 
 }
