@@ -18,6 +18,7 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 import com.wico.R;
 import com.wico.datatypes.Question;
+import com.wico.network.ParseConnector;
 import com.wico.ui.CreateQuestionActivity;
 
 public class Main extends AppCompatActivity {
@@ -44,22 +45,12 @@ public class Main extends AppCompatActivity {
 
             }
         });
-
-        //connectText = (TextView) findViewById(R.id.connectmessage);
-
-        //testStorage();
+        connectToParse();
     }
 
     private void connectToParse(){
-        Parse.enableLocalDatastore(this);
-        ParseObject.registerSubclass(Question.class);
-        Parse.initialize(this, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
-    }
-
-    private void testStorage(){
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
+        ParseConnector connector = new ParseConnector();
+        connector.initialize(this);
     }
 
     @Override
