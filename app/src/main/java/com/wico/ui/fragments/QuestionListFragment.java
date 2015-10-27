@@ -61,26 +61,17 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
 
-        //used arraylist to create the list
-
-
+    public void loadQuestions(){
         ParseConnector parse = new ParseConnector();
-        //parse.queryContent();
         ArrayList<Question> questionList = parse.getQuestions();
-
-      /*  questionList.add(new Question("title","content"));
-        questionList.add(new Question("title2","content2"));*/
-
-        // TODO: Change Adapter to display your content
         mAdapter = new QuestionListAdapter(getActivity(),android.R.id.text1,questionList);
-//        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-//                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -98,10 +89,6 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
     @Override
     public void onResume(){
         super.onResume();
-        ParseConnector parse = new ParseConnector();
-        ArrayList<Question> questionList = parse.getQuestions();
-        mAdapter = new QuestionListAdapter(getActivity(), android.R.id.text1, questionList);
-        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -155,7 +142,7 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        void onFragmentInteraction(String id);
     }
 
 }

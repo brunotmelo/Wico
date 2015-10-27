@@ -17,23 +17,27 @@ import android.widget.TextView;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.wico.R;
-import com.wico.datatypes.Question;
+import com.wico.network.NetworkChecker;
 import com.wico.network.ParseConnector;
-import com.wico.ui.CreateQuestionActivity;
+import com.wico.ui.fragments.QuestionListFragment;
 
 public class Main extends AppCompatActivity {
 
     private TextView connectText;
+    private QuestionListFragment listFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        connectToParse();
         super.onCreate(savedInstanceState);
+        connectToParse();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        listFragment = (QuestionListFragment)getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
+
         //set action button background
+        connectText = (TextView) findViewById(R.id.connectmessage);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
         int btncolor = getResources().getColor(R.color.colorAccent);
         fab.setBackgroundTintList(ColorStateList.valueOf(btncolor));
@@ -45,7 +49,28 @@ public class Main extends AppCompatActivity {
 
             }
         });
-        connectToParse();
+        waitInternetAndLoadContent();
+    }
+
+    public void waitInternetAndLoadContent(){
+        NetworkChecker checker = new NetworkChecker(this);
+        checker.setNetworkCheckerListener(new NetworkChecker.NetworkCheckerListener() {
+            @Override
+            public void onConnected() {
+                connectedToInternet();
+            }
+        });
+        checker.start();
+    }
+
+    private void connectedToInternet(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                connectText.setVisibility(View.GONE);
+                listFragment.loadQuestions();
+            }
+        });
     }
 
     private void connectToParse(){
@@ -55,10 +80,8 @@ public class Main extends AppCompatActivity {
 
     @Override
     public void onResume(){
-        super.onResume();
-        //Fragment frag = getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
-        //frag.onResume();
-
+        waitInternetAndLoadContent();
+        super.onResume();    
     }
 
     @Override
