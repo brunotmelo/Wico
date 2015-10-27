@@ -1,5 +1,8 @@
-package com.wico;
+package com.wico.ui;
 
+import android.app.Fragment;
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +16,9 @@ import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.wico.R;
+import com.wico.datatypes.Question;
+import com.wico.ui.CreateQuestionActivity;
 
 public class Main extends AppCompatActivity {
 
@@ -20,36 +26,48 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        connectToParse();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //set action button background
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
+        int btncolor = getResources().getColor(R.color.colorAccent);
+        fab.setBackgroundTintList(ColorStateList.valueOf(btncolor));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), CreateQuestionActivity.class);
+                startActivity(intent);
+
             }
         });
 
-        connectText = (TextView) findViewById(R.id.connectmessage);
-        connectToParse();
-        testStorage();
+        //connectText = (TextView) findViewById(R.id.connectmessage);
+
+        //testStorage();
     }
 
     private void connectToParse(){
         Parse.enableLocalDatastore(this);
+        ParseObject.registerSubclass(Question.class);
         Parse.initialize(this, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
-        connectText.setText("Connected to parse");
-        connectText.setTextColor(Color.GREEN);
     }
 
     private void testStorage(){
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //Fragment frag = getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
+        //frag.onResume();
+
     }
 
     @Override
@@ -73,4 +91,5 @@ public class Main extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
