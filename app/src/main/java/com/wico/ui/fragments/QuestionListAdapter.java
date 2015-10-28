@@ -59,7 +59,7 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
                 content.setText(q.getContent());
             }
             if (answersButton != null) {
-                answersButton.setText("0 answers");
+                answersButton.setText(R.string.button_answers_text);
             }
         }
     }
