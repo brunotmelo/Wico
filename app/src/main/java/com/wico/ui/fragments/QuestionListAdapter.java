@@ -16,6 +16,8 @@ import java.util.List;
 
 public class QuestionListAdapter extends ArrayAdapter<Question> {
 
+    private View v;
+
     public QuestionListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
@@ -26,35 +28,40 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        v = convertView;
+        inflateView();
+        addQuestionToCell(2);
+        return v;
+    }
 
-        View v = convertView;
-
-        if (v == null) {
-            LayoutInflater vi;
-            vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.question_cell, null);
+    private void inflateView(){
+        if (isViewEmpty()) {
+            LayoutInflater cellView;
+            cellView = LayoutInflater.from(getContext());
+            v = cellView.inflate(R.layout.question_cell, null);
         }
+    }
 
+    private boolean isViewEmpty(){
+        return v == null;
+    }
+
+    private void addQuestionToCell(int position){
         Question q = getItem(position);
-
         if (q != null) {
             TextView title = (TextView) v.findViewById(R.id.questionCellTitleText);
             TextView content = (TextView) v.findViewById(R.id.questionCellContentText);
             Button answersButton = (Button) v.findViewById(R.id.questionCellAnswersButton);
-
             if (title != null) {
                 title.setText(q.getTitle());
             }
-
-            if (content != null) {content.setText(q.getContent());
+            if (content != null) {
+                content.setText(q.getContent());
             }
-
             if (answersButton != null) {
                 answersButton.setText("0 answers");
             }
         }
-
-        return v;
     }
 
 }
