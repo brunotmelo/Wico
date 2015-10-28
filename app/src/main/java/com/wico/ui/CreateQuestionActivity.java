@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
@@ -51,9 +52,26 @@ public class CreateQuestionActivity extends AppCompatActivity {
         String title = getUiTitle();
         String content = getUiContent();
         Question question = new Question.Builder().title(title).content(content).build();
-        QuestionSaver qs = new QuestionSaver(this, question);
-        qs.start();
-        savingQuestion();
+        QuestionSaver questionSaverThread = new QuestionSaver(this, question);
+        setThreadExceptionHandler();
+        questionSaverThread.start();
+        lockUi();
+    }
+
+    private void setThreadExceptionHandler(){
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable e) {
+                unableToSaveExceptionHandler();
+            }
+        });
+    }
+
+    private void unableToSaveExceptionHandler()
+    {
+        unlockUi();
+        Toast.makeText(this, "Unable to save question", Toast.LENGTH_LONG).show();
+
     }
 
     private String getUiTitle(){
@@ -64,11 +82,17 @@ public class CreateQuestionActivity extends AppCompatActivity {
         return content.getText().toString();
     }
 
-    private void savingQuestion(){
+    private void lockUi(){
         sendButton.setEnabled(false);
         title.setEnabled(false);
         content.setEnabled(false);
         spinner.setVisibility(View.VISIBLE);
+    }
+
+    private void unlockUi(){
+        sendButton.setEnabled(true);
+        title.setEnabled(true);
+        content.setEnabled(true);
     }
 
     public void onQuestionSaved(){
