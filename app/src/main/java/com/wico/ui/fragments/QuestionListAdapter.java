@@ -30,7 +30,7 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
     public View getView(int position, View convertView, ViewGroup parent) {
         v = convertView;
         inflateView();
-        addQuestionToCell(2);
+        addQuestionToCell(position);
         return v;
     }
 
