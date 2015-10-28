@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
@@ -16,6 +17,8 @@ public class CreateQuestionActivity extends AppCompatActivity {
 
     private FloatingActionButton sendButton;
     private ProgressBar spinner;
+    private EditText title;
+    private EditText content;
 
 
     @Override
@@ -32,7 +35,10 @@ public class CreateQuestionActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         spinner = (ProgressBar)findViewById(R.id.savingQuestionProgressBar);
+        title = (EditText) findViewById(R.id.titleEditText);
+        content = (EditText) findViewById(R.id.contentEditText);
         sendButton = (FloatingActionButton) findViewById(R.id.fab);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,32 +52,60 @@ public class CreateQuestionActivity extends AppCompatActivity {
         String title = getUiTitle();
         String content = getUiContent();
         Question question = new Question.Builder().title(title).content(content).build();
-        QuestionSaver qs = new QuestionSaver(this,question);
-        qs.run();
-        savingQuestion();
+        QuestionSaver questionSaverThread = new QuestionSaver(this, question);
+        setThreadExceptionHandler();
+        questionSaverThread.start();
+        lockUi();
+    }
+
+    private void setThreadExceptionHandler(){
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable e) {
+                unableToSaveExceptionHandler();
+            }
+        });
+    }
+
+    private void unableToSaveExceptionHandler()
+    {
+        unlockUi();
+        Toast.makeText(this, "Unable to save question", Toast.LENGTH_LONG).show();
+
     }
 
     private String getUiTitle(){
-        EditText title = (EditText) findViewById(R.id.titleEditText);
         return title.getText().toString();
     }
 
     private String getUiContent(){
-        EditText content = (EditText) findViewById(R.id.contentEditText);
         return content.getText().toString();
     }
 
-    private void savingQuestion(){
+    private void lockUi(){
         sendButton.setEnabled(false);
+        title.setEnabled(false);
+        content.setEnabled(false);
         spinner.setVisibility(View.VISIBLE);
     }
 
-    public void onQuestionSaved(){
-        spinner.setVisibility(View.GONE);
-        openMainScreen();
+    private void unlockUi(){
+        sendButton.setEnabled(true);
+        title.setEnabled(true);
+        content.setEnabled(true);
     }
 
-    private void openMainScreen(){
+    public void onQuestionSaved(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                spinner.setVisibility(View.GONE);
+                openMainScreen();
+            }
+        });
+    }
+
+    private void openMainScreen() {
         onBackPressed();
     }
 

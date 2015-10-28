@@ -1,4 +1,4 @@
-package com.wico.network;
+package com.wico.ui.threads;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

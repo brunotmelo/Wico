@@ -6,14 +6,11 @@ import com.wico.ui.CreateQuestionActivity;
 
 public class QuestionSaver extends Thread{
     private CreateQuestionActivity savingQuestionActivity;
-    private boolean saved;
     private Question question;
 
     public QuestionSaver(CreateQuestionActivity caller, Question question){
         savingQuestionActivity = caller;
         this.question = question;
-
-        saved = false;
     }
 
     public void run(){
