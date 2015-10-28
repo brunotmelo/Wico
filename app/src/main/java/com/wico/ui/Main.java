@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -34,7 +35,7 @@ public class Main extends AppCompatActivity {
         //set action button background
         connectText = (TextView) findViewById(R.id.connectmessage);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
-        int btncolor = ContextCompat.getColor(this,R.color.colorAccent);
+        int btncolor = ContextCompat.getColor(this, R.color.colorAccent);
         fab.setBackgroundTintList(ColorStateList.valueOf(btncolor));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
