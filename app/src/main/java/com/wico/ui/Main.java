@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wico.R;
-import com.wico.network.NetworkChecker;
+import com.wico.ui.threads.NetworkChecker;
 import com.wico.network.ParseConnector;
 import com.wico.ui.fragments.QuestionListFragment;
 
