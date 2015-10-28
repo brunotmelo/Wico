@@ -21,22 +21,33 @@ public class Main extends AppCompatActivity {
 
     private TextView connectText;
     private QuestionListFragment listFragment;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         connectToParse();
         setContentView(R.layout.activity_main);
+        setToolbar();
+        startUiVariables();
+        waitInternetAndLoadContent();
+    }
+
+    private void connectToParse(){
+        ParseConnector connector = new ParseConnector();
+        connector.initialize(this);
+    }
+
+    private void setToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
+    private void startUiVariables(){
         listFragment = (QuestionListFragment)getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
-
-        //set action button background
         connectText = (TextView) findViewById(R.id.connectmessage);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
-        int btncolor = ContextCompat.getColor(this, R.color.colorAccent);
-        fab.setBackgroundTintList(ColorStateList.valueOf(btncolor));
+        fab = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
+        fab.setBackgroundTintList(ColorStateList.valueOf(getFabColor()));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,7 +55,10 @@ public class Main extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        waitInternetAndLoadContent();
+    }
+
+    private int getFabColor(){
+        return ContextCompat.getColor(this, R.color.colorAccent);
     }
 
     public void waitInternetAndLoadContent(){
@@ -66,11 +80,6 @@ public class Main extends AppCompatActivity {
                 listFragment.loadQuestions();
             }
         });
-    }
-
-    private void connectToParse(){
-        ParseConnector connector = new ParseConnector();
-        connector.initialize(this);
     }
 
     @Override

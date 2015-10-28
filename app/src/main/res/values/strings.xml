@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_create_question">Create new question</string>
 
+    <string name="button_answers_text">0 answers</string>
+
 </resources>
