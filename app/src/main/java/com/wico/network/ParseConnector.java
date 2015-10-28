@@ -38,7 +38,7 @@ public class ParseConnector {
         checkConnection();
         try {
             question.save();
-        } catch (ParseException e) {
+        } catch (ParseException exception) {
             throw new WicoParseException();
         }
     }

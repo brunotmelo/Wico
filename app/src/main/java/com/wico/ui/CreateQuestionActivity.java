@@ -20,7 +20,6 @@ public class CreateQuestionActivity extends AppCompatActivity {
     private EditText title;
     private EditText content;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +34,6 @@ public class CreateQuestionActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
         spinner = (ProgressBar)findViewById(R.id.savingQuestionProgressBar);
         title = (EditText) findViewById(R.id.titleEditText);
         content = (EditText) findViewById(R.id.contentEditText);
@@ -71,7 +69,6 @@ public class CreateQuestionActivity extends AppCompatActivity {
     {
         unlockUi();
         Toast.makeText(this, "Unable to save question", Toast.LENGTH_LONG).show();
-
     }
 
     private String getUiTitle(){
