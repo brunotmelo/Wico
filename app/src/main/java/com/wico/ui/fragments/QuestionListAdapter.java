@@ -50,7 +50,7 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
             }
 
             if (answersButton != null) {
-                answersButton.setText(q.getNumOfAwnsers()+ " answers");
+                answersButton.setText("0 answers");
             }
         }
 
