@@ -24,6 +24,11 @@ public class CreateQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_question);
+        setToolbar();
+        startUiElements();
+    }
+
+    private void setToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
@@ -34,6 +39,9 @@ public class CreateQuestionActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    private void startUiElements(){
         spinner = (ProgressBar)findViewById(R.id.savingQuestionProgressBar);
         title = (EditText) findViewById(R.id.titleEditText);
         content = (EditText) findViewById(R.id.contentEditText);
@@ -41,19 +49,23 @@ public class CreateQuestionActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveQuestion();
+                getQuestionAndSave();
             }
         });
     }
 
-    private void saveQuestion(){
+    private void getQuestionAndSave(){
         String title = getUiTitle();
         String content = getUiContent();
         Question question = new Question.Builder().title(title).content(content).build();
+        saveQuestion(question);
+        lockUi();
+    }
+
+    private void saveQuestion(Question question){
         QuestionSaver questionSaverThread = new QuestionSaver(this, question);
         setThreadExceptionHandler();
         questionSaverThread.start();
-        lockUi();
     }
 
     private void setThreadExceptionHandler(){

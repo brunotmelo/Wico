@@ -53,11 +53,9 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questionlist, container, false);
-
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setAdapter(questionAdapter);
         mListView.setOnItemClickListener(this);
-
         return view;
     }
 
