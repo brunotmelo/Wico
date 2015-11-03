@@ -16,7 +16,7 @@ import java.util.List;
 
 public class QuestionListAdapter extends ArrayAdapter<Question> {
 
-    private View v;
+    private View view;
 
     public QuestionListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -28,35 +28,35 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        v = convertView;
+        view = convertView;
         inflateView();
         addQuestionToCell(position);
-        return v;
+        return view;
     }
 
     private void inflateView(){
         if (isViewEmpty()) {
             LayoutInflater cellView;
             cellView = LayoutInflater.from(getContext());
-            v = cellView.inflate(R.layout.question_cell, null);
+            view = cellView.inflate(R.layout.question_cell, null);
         }
     }
 
     private boolean isViewEmpty(){
-        return v == null;
+        return view == null;
     }
 
     private void addQuestionToCell(int position){
-        Question q = getItem(position);
-        if (q != null) {
-            TextView title = (TextView) v.findViewById(R.id.questionCellTitleText);
-            TextView content = (TextView) v.findViewById(R.id.questionCellContentText);
-            Button answersButton = (Button) v.findViewById(R.id.questionCellAnswersButton);
+        Question question = getItem(position);
+        if (question != null) {
+            TextView title = (TextView) view.findViewById(R.id.questionCellTitleText);
+            TextView content = (TextView) view.findViewById(R.id.questionCellContentText);
+            Button answersButton = (Button) view.findViewById(R.id.questionCellAnswersButton);
             if (title != null) {
-                title.setText(q.getTitle());
+                title.setText(question.getTitle());
             }
             if (content != null) {
-                content.setText(q.getContent());
+                content.setText(question.getContent());
             }
             if (answersButton != null) {
                 answersButton.setText(R.string.button_answers_text);

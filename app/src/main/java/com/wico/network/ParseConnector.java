@@ -17,10 +17,10 @@ public class ParseConnector {
 
     private static boolean isConnected = false;
 
-    public ParseConnector(){
+    public ParseConnector() {
     }
 
-    public void initialize(Context context){
+    public void initialize(Context context) {
         checkNotInitialized();
         Parse.enableLocalDatastore(context);
         ParseObject.registerSubclass(Question.class);
@@ -29,12 +29,12 @@ public class ParseConnector {
     }
 
     private void checkNotInitialized() {
-        if(isConnected){
+        if (isConnected) {
             throw new AlreadyInitializedException();
         }
     }
 
-    public void storeQuestion(Question question){
+    public void storeQuestion(Question question) {
         checkConnection();
         try {
             question.save();
@@ -43,13 +43,13 @@ public class ParseConnector {
         }
     }
 
-    public ArrayList<Question> getQuestions(){
+    public ArrayList<Question> getQuestions() {
         checkConnection();
         ParseQuery<Question> query = createQuery();
         ArrayList<Question> questions = new ArrayList<>();
-        try{
-           questions.addAll(query.find());
-        }catch (ParseException e) {
+        try {
+            questions.addAll(query.find());
+        } catch (ParseException e) {
             throw new WicoParseException();
         }
         return questions;
@@ -62,8 +62,8 @@ public class ParseConnector {
         return query;
     }
 
-    private void checkConnection(){
-        if(!isConnected){
+    private void checkConnection() {
+        if (!isConnected) {
             throw new DisconectedFromParseException();
         }
     }

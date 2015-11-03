@@ -28,7 +28,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         startUiElements();
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
@@ -41,8 +41,8 @@ public class CreateQuestionActivity extends AppCompatActivity {
         });
     }
 
-    private void startUiElements(){
-        spinner = (ProgressBar)findViewById(R.id.savingQuestionProgressBar);
+    private void startUiElements() {
+        spinner = (ProgressBar) findViewById(R.id.savingQuestionProgressBar);
         title = (EditText) findViewById(R.id.titleEditText);
         content = (EditText) findViewById(R.id.contentEditText);
         sendButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -54,7 +54,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         });
     }
 
-    private void getQuestionAndSave(){
+    private void getQuestionAndSave() {
         String title = getUiTitle();
         String content = getUiContent();
         Question question = new Question.Builder().title(title).content(content).build();
@@ -62,13 +62,13 @@ public class CreateQuestionActivity extends AppCompatActivity {
         lockUi();
     }
 
-    private void saveQuestion(Question question){
+    private void saveQuestion(Question question) {
         QuestionSaver questionSaverThread = new QuestionSaver(this, question);
         setThreadExceptionHandler();
         questionSaverThread.start();
     }
 
-    private void setThreadExceptionHandler(){
+    private void setThreadExceptionHandler() {
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable e) {
@@ -77,34 +77,33 @@ public class CreateQuestionActivity extends AppCompatActivity {
         });
     }
 
-    private void unableToSaveExceptionHandler()
-    {
+    private void unableToSaveExceptionHandler() {
         unlockUi();
         Toast.makeText(this, "Unable to save question", Toast.LENGTH_LONG).show();
     }
 
-    private String getUiTitle(){
+    private String getUiTitle() {
         return title.getText().toString();
     }
 
-    private String getUiContent(){
+    private String getUiContent() {
         return content.getText().toString();
     }
 
-    private void lockUi(){
+    private void lockUi() {
         sendButton.setEnabled(false);
         title.setEnabled(false);
         content.setEnabled(false);
         spinner.setVisibility(View.VISIBLE);
     }
 
-    private void unlockUi(){
+    private void unlockUi() {
         sendButton.setEnabled(true);
         title.setEnabled(true);
         content.setEnabled(true);
     }
 
-    public void onQuestionSaved(){
+    public void onQuestionSaved() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

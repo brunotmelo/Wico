@@ -42,10 +42,10 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         super.onCreate(savedInstanceState);
     }
 
-    public void loadQuestions(){
-        ParseConnector parse = new ParseConnector();
-        ArrayList<Question> questionList = parse.getQuestions();
-        questionAdapter = new QuestionListAdapter(getActivity(),android.R.id.text1,questionList);
+    public void loadQuestions() {
+        ParseConnector parseConnector = new ParseConnector();
+        ArrayList<Question> questionList = parseConnector.getQuestions();
+        questionAdapter = new QuestionListAdapter(getActivity(), android.R.id.text1, questionList);
         mListView.setAdapter(questionAdapter);
     }
 
@@ -60,7 +60,7 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
     }
 

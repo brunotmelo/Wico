@@ -21,7 +21,7 @@ public class Main extends AppCompatActivity {
 
     private TextView connectText;
     private QuestionListFragment listFragment;
-    private FloatingActionButton fab;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +33,22 @@ public class Main extends AppCompatActivity {
         waitInternetAndLoadContent();
     }
 
-    private void connectToParse(){
+    private void connectToParse() {
         ParseConnector connector = new ParseConnector();
         connector.initialize(this);
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
-    private void startUiVariables(){
-        listFragment = (QuestionListFragment)getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
+    private void startUiVariables() {
+        listFragment = (QuestionListFragment) getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
         connectText = (TextView) findViewById(R.id.connectmessage);
-        fab = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
-        fab.setBackgroundTintList(ColorStateList.valueOf(getFabColor()));
-        fab.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
+        floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getFabColor()));
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CreateQuestionActivity.class);
@@ -57,11 +57,11 @@ public class Main extends AppCompatActivity {
         });
     }
 
-    private int getFabColor(){
+    private int getFabColor() {
         return ContextCompat.getColor(this, R.color.colorAccent);
     }
 
-    public void waitInternetAndLoadContent(){
+    public void waitInternetAndLoadContent() {
         NetworkChecker checker = new NetworkChecker(this);
         checker.setNetworkCheckerListener(new NetworkChecker.NetworkCheckerListener() {
             @Override
@@ -72,7 +72,7 @@ public class Main extends AppCompatActivity {
         checker.start();
     }
 
-    private void connectedToInternet(){
+    private void connectedToInternet() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -83,24 +83,24 @@ public class Main extends AppCompatActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         waitInternetAndLoadContent();
-        super.onResume();    
+        super.onResume();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings){
+        if (id == R.id.action_settings) {
             return true;
         }
-         return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
 }

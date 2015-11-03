@@ -14,6 +14,7 @@ public final class Question extends ParseObject{
     public static final class Builder{
         private String title;
         private String content;
+        private int numberOfAnswers;
 
         public Builder title(String title){
             this.title = title;
@@ -25,14 +26,17 @@ public final class Question extends ParseObject{
             return this;
         }
 
+        public Builder numberOfAnswers(int numberOfAnswers){
+            this.numberOfAnswers = numberOfAnswers;
+            return this;
+        }
+
         public Question build() {
             return new Question(this);
         }
     }
 
-    /**
-     * The method below (public Question()),
-     * although empty, is mandatory to allow question object to be used as a parse object.
+    /** The method below (public Question()) , although empty, is mandatory to allow question object to be used as a parse object.
      */
     public Question(){
 
@@ -41,6 +45,7 @@ public final class Question extends ParseObject{
     private Question(Builder builder){
         put("title", builder.title);
         put("content",builder.content);
+        put("answers",builder.numberOfAnswers);
     }
 
     public String getTitle(){
@@ -50,4 +55,10 @@ public final class Question extends ParseObject{
     public String getContent(){
         return getString("content");
     }
+
+    public String getNumberOfAwnsers(){
+        return getString("numberOfAnswers");
+    }
+
+
 }
