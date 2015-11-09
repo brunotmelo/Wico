@@ -14,6 +14,7 @@ public class Answer extends ParseObject {
             this.content = content;
             return this;
         }
+
         public Answer build() {
             return new Answer(this);
         }
@@ -26,6 +27,7 @@ public class Answer extends ParseObject {
     private Answer(Builder builder){
         put("content",builder.content);
     }
+
     public String getAnswerContent() {
         return getString("content");
     }
