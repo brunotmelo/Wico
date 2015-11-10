@@ -1,10 +1,7 @@
 package com.wico.datatypes;
 
 import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.wico.exceptions.WicoParseException;
 
 import java.util.ArrayList;
 
@@ -39,9 +36,9 @@ public final class Question extends ParseObject{
     }
 
     private Question(Builder builder){
+        answers = new ArrayList<>();
         put("title", builder.title);
         put("content",builder.content);
-        answers = new ArrayList<>();
         put("answers",answers);
 
     }
@@ -59,8 +56,8 @@ public final class Question extends ParseObject{
         return getString("content");
     }
 
-    public String getNumberOfAwnsers(){
-        return getString("numberOfAnswers");
+    public int getNumberOfAwnsers(){
+        return answers.size();
     }
 
 

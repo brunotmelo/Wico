@@ -51,15 +51,15 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
         if (question != null) {
             TextView title = (TextView) view.findViewById(R.id.questionCellTitleText);
             TextView content = (TextView) view.findViewById(R.id.questionCellContentText);
-            Button answersButton = (Button) view.findViewById(R.id.questionCellAnswersButton);
+            TextView answersNumber = (TextView) view.findViewById(R.id.questionCellAnswersText);
             if (title != null) {
                 title.setText(question.getTitle());
             }
             if (content != null) {
                 content.setText(question.getContent());
             }
-            if (answersButton != null) {
-                answersButton.setText(R.string.button_answers_text);
+            if (answersNumber != null) {
+                answersNumber.setText(R.string.button_answers_text);
             }
         }
     }

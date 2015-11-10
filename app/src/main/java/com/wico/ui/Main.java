@@ -7,9 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.wico.R;
@@ -28,10 +30,18 @@ public class Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         connectToParse();
         setContentView(R.layout.activity_main);
+        //setTransition();
         setToolbar();
         startUiVariables();
         waitInternetAndLoadContent();
     }
+
+/*    private void setTransition() {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        Transition transition =
+                getWindow().setSharedElementEnterTransition(transition);
+        getWindow().setSharedElementExitTransition(transition);
+    }*/
 
     private void connectToParse() {
         ParseConnector connector = new ParseConnector();
@@ -48,13 +58,17 @@ public class Main extends AppCompatActivity {
         connectText = (TextView) findViewById(R.id.connectmessage);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
         floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getFabColor()));
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnClickListener(getFabClickListener());
+    }
+
+    private View.OnClickListener getFabClickListener() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CreateQuestionActivity.class);
                 startActivity(intent);
             }
-        });
+        };
     }
 
     private int getFabColor() {

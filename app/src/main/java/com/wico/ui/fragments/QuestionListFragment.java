@@ -76,12 +76,12 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //TODO: handle item clicks to open question with answers
-        /*if (mListener!=null) {
+/*        if (mListener!=null) {
+
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            // mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }*/
+            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);*/
+       // }
     }
 
 
