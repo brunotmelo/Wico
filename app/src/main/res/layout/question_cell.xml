@@ -1,31 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    card_view:cardCornerRadius="4dp"
+    card_view:contentPadding="10dp"
+    card_view:cardUseCompatPadding = "true"
+    >
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5pt">
-
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Is this major hard?"
         android:id="@+id/questionCellTitleText" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="I would like to know if the course is hard or what."
         android:id="@+id/questionCellContentText" />
 
     <View style="@style/Divider"/>
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/questionCellAnswersButton" />
-
+        android:id="@+id/questionCellAnswersText" />
 
 </LinearLayout>
+</android.support.v7.widget.CardView>
