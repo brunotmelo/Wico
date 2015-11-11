@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
@@ -31,8 +32,16 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
         view = convertView;
         inflateView();
         addQuestionToCell(position);
+        //view.setOnClickListener(cellListener);
         return view;
     }
+
+    private View.OnClickListener cellListener= new View.OnClickListener(){
+        public void onClick(View v) {
+            //get question from position
+            //Toast.makeText(getContext(), "Unable to save question", Toast.LENGTH_LONG).show();
+        }
+    };
 
     private void inflateView(){
         if (isViewEmpty()) {

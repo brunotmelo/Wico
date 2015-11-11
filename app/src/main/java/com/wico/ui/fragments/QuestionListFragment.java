@@ -2,6 +2,7 @@ package com.wico.ui.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +10,19 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
+import com.wico.ui.CreateQuestionActivity;
+import com.wico.ui.QuestionAndAnswersActivity;
 
 import java.util.ArrayList;
 
 public class QuestionListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
+    private OnFragmentInteractionListener mListener;
 
     /**
      * The fragment's ListView/GridView.
@@ -36,6 +41,7 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
      */
     public QuestionListFragment() {
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,13 +82,12 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-/*        if (mListener!=null) {
-
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);*/
-       // }
+        Intent intent = new Intent(getActivity(), QuestionAndAnswersActivity.class);
+        startActivity(intent);
     }
 
+    public interface OnFragmentInteractionListener {
+        public void onFragmentInteraction(String id);
+    }
 
 }
