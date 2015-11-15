@@ -7,7 +7,49 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_question_and_answers"
-    tools:context="com.wico.ui.QuestionAndAnswersActivity">
+    tools:context="com.wico.ui.QuestionAndAnswersActivity"
+    android:weightSum="1">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:elevation="1dp"
+        android:id="@+id/qa_questionLayout">
+
+        <TextView
+            android:id="@+id/qa_questionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="16dp"
+            android:text="Question Title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/qa_questionContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is going to be even more pointless than the last question I posed, for those of you lucky enough to be graced with the beauty of the previous idiocy. This one shall hopefully be just as long and graceful in it&apos;s elegance. I&apos;m seeing the spell check works on here. That&apos;s kind of a surprise. It&apos;s probably just an element of genymotion that I&apos;m not aware of. Oh well, forget this. I&apos;m bored and have a lot to do. "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@id/qa_questionTitle"/>
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/qa_answerList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="60dp"
+        android:background="@color/greybg"
+        android:clipToPadding="false"
+        android:paddingTop="10dp" />
 
 </LinearLayout>

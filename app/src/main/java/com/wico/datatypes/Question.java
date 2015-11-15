@@ -2,7 +2,9 @@ package com.wico.datatypes;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.wico.network.ParseConnector;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @ParseClassName("Question")
@@ -32,20 +34,32 @@ public final class Question extends ParseObject{
     // The method below (public Question()) ,
     // although empty, is mandatory to allow question object to be used as a parse object.
     public Question(){
-
     }
 
     private Question(Builder builder){
-        answers = new ArrayList<>();
         put("title", builder.title);
         put("content",builder.content);
-        put("answers",answers);
 
+    }
+
+    public void populateArrayTest() {
+        answers = new ArrayList<>();
+        Answer ans = new Answer.Builder().content("blabla1").build();
+        Answer ans2 = new Answer.Builder().content("blabla2").build();
+        answers.add(ans);
+        answers.add(ans2);
+        put("answers", answers);
+        ParseConnector connector = new ParseConnector();
+        //connector.updateQuestion(this);
     }
 
     public void addAnswer(Answer answer){
         answers.add(answer);
         put("answers",answers);
+    }
+
+    public ArrayList<Answer> getAnswers(){
+        return answers;
     }
 
     public String getTitle(){

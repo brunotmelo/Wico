@@ -10,19 +10,16 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
-import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
-import com.wico.ui.CreateQuestionActivity;
 import com.wico.ui.QuestionAndAnswersActivity;
+import com.wico.ui.adapters.QuestionListAdapter;
 
 import java.util.ArrayList;
 
 public class QuestionListFragment extends Fragment implements AbsListView.OnItemClickListener {
-
-    private OnFragmentInteractionListener mListener;
 
     /**
      * The fragment's ListView/GridView.
@@ -83,11 +80,11 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), QuestionAndAnswersActivity.class);
+        Question question = (Question)questionAdapter.getItem(position);
+        intent.putExtra("questionId", question.getObjectId());
+        intent.putExtra("title",question.getTitle());
+        intent.putExtra("content",question.getContent());
         startActivity(intent);
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(String id);
     }
 
 }

@@ -6,8 +6,6 @@
     <string name="button_answers_text">0 answers</string>
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_page_test">PageTestActivity</string>
-    <string name="title_activity_question_and_answers">QuestionAndAnswersActivity</string>
+    <string name="title_activity_question_and_answers">Question</string>
 
 </resources>

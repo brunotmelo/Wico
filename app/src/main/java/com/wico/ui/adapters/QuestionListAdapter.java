@@ -1,4 +1,4 @@
-package com.wico.ui.fragments;
+package com.wico.ui.adapters;
 
 
 import android.content.Context;

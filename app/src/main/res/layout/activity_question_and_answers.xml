@@ -17,4 +17,45 @@
 
     <include layout="@layout/content_question_and_answers" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|end"
+        android:paddingBottom="10dp"
+        android:clipToPadding="false">
+
+        <EditText
+            android:id="@+id/qa_answerbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:textAlignment="textStart"
+            android:elevation="2dp"
+            android:gravity="left|center_vertical|start"
+            android:layout_alignBottom="@+id/qa_sendAnswerButton"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:minHeight="40dp"
+            android:layout_toLeftOf="@+id/qa_sendAnswerButton"
+            android:layout_toStartOf="@+id/qa_sendAnswerButton"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            fabSize="mini"
+            android:id="@+id/qa_sendAnswerButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="right"
+            android:src="@drawable/ic_send_white_24dp"
+            android:scaleType="center"
+            android:elevation="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="10dp"/>
+
+    </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>
