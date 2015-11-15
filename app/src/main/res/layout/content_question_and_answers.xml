@@ -49,7 +49,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="60dp"
         android:background="@color/greybg"
-        android:clipToPadding="false"
-        android:paddingTop="10dp" />
+        android:clipToPadding="false" />
 
 </LinearLayout>

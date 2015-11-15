@@ -4,17 +4,20 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Answer;
 import com.wico.network.ParseConnector;
 import com.wico.ui.adapters.AnswerListAdapter;
+import com.wico.ui.threads.AnswerSaver;
+import com.wico.ui.threads.listeners.AnswerSavedListener;
 
 import java.util.ArrayList;
 
@@ -22,17 +25,26 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
 
     private AbsListView answersListView;
     private ListAdapter answersAdapter;
-
     private FloatingActionButton sendAnswerButton;
+    private EditText answerInputText;
 
     private String questionId;
+
+    private AnswerSavedListener savedListener = new AnswerSavedListener(){
+        @Override
+        public void onAnswerSaved(){
+            answerSaved();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_and_answers);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        answerInputText = (EditText)findViewById(R.id.qa_answerbox);
         sendAnswerButton = (FloatingActionButton) findViewById(R.id.qa_sendAnswerButton);
+        answersListView = (AbsListView) findViewById(R.id.qa_answerList);
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -48,7 +60,6 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
         setQuestionContents();
         setButtonClickListener();
         getAnswersAndAttach();
-        //attachAnswerList();
     }
 
     private void setButtonClickListener() {
@@ -61,15 +72,43 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
     }
 
     private void saveAnswer(){
-        EditText input = (EditText)findViewById(R.id.qa_answerbox);
-        String answerText = input.getText().toString();
-        ParseConnector connector = new ParseConnector();
+        lockInputUi();
+        String answerText = answerInputText.getText().toString();
         Answer answer = new Answer.Builder().content(answerText).parentQuestionId(questionId).build();
-        connector.storeAnswer(answer);
+        AnswerSaver saverThread = new AnswerSaver(answer, savedListener);
+        saverThread.start();
+    }
+
+    //CallBack
+    private void answerSaved(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                unlockInputUi();
+                sendSavedMessage();
+                refreshContents();
+            }
+        });
+
+    }
+
+    private void lockInputUi(){
+        answerInputText.setEnabled(false);
+        sendAnswerButton.setEnabled(false);
+    }
+
+    private void unlockInputUi(){
+        answerInputText.setEnabled(true);
+        answerInputText.setText("");
+        sendAnswerButton.setEnabled(true);
+    }
+
+    private void sendSavedMessage(){
+        Toast.makeText(this, "Answer saved", Toast.LENGTH_SHORT).show();
     }
 
     private void refreshContents(){
-
+        getAnswersAndAttach();
     }
 
     private void getAnswersAndAttach(){
@@ -86,12 +125,43 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
     }
 
     private void attachAnswerList(ArrayList<Answer> answerList) {
-        answersListView = (AbsListView) findViewById(R.id.qa_answerList);
         answersAdapter = new AnswerListAdapter(this, android.R.id.text1, answerList);
+        //addSwipeListener();
         answersListView.setAdapter(answersAdapter);
 
-
         //answersListView.setOnItemClickListener(this);
+    }
+
+    //variables for swipe handling
+    float historicX = Float.NaN, historicY = Float.NaN;
+    static final int DELTA = 50;
+    enum Direction {LEFT, RIGHT;}
+
+    private void addSwipeListener(){
+        answersListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        historicX = event.getX();
+                        historicY = event.getY();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        if (event.getX() - historicX < -DELTA) {
+                            Toast.makeText(getApplicationContext(),"slided left",Toast.LENGTH_SHORT).show();
+                            return true;
+                        } else if (event.getX() - historicX > DELTA) {
+//                            FunctionDeleteRowWhenSlidingRight();
+                            return true;
+                        }
+                        break;
+                    default:
+                        return false;
+                }
+                return false;
+            }
+        });
     }
 
 

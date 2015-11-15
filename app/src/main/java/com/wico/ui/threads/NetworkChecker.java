@@ -22,6 +22,7 @@ public class NetworkChecker extends Thread{
         this.listener = listener;
     }
 
+    @Override
     public void run() {
         while (!isNetworkAvailable()) {
             waitALittle();
