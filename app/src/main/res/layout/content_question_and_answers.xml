@@ -33,7 +33,6 @@
             android:id="@+id/qa_questionContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This is going to be even more pointless than the last question I posed, for those of you lucky enough to be graced with the beauty of the previous idiocy. This one shall hopefully be just as long and graceful in it&apos;s elegance. I&apos;m seeing the spell check works on here. That&apos;s kind of a surprise. It&apos;s probably just an element of genymotion that I&apos;m not aware of. Oh well, forget this. I&apos;m bored and have a lot to do. "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"

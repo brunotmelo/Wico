@@ -56,14 +56,36 @@ public class ParseConnector {
         checkConnection();
         try {
             answer.save();
+            updateAnswersForQuestion(answer.getQuestionId());
         } catch (ParseException exception) {
             throw new WicoParseException();
         }
     }
 
+    private void updateAnswersForQuestion(String questionId) {
+        Question question = getQuestion(questionId);
+        question.addAnswer();
+        try {
+            question.save();
+        } catch (ParseException e) {
+            throw new WicoParseException();
+        }
+    }
+
+    private Question getQuestion(String questionId){
+        ParseQuery<Question> query = createQuestionQuery();
+        Question question = null;
+        try {
+            question = query.get(questionId);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return question;
+    }
+
     public ArrayList<Question> getQuestions() {
         checkConnection();
-        ParseQuery<Question> query = createQuestionQuery();
+        ParseQuery<Question> query = createQuestionsQuery();
         ArrayList<Question> questions = new ArrayList<>();
         try {
             questions.addAll(query.find());
@@ -92,10 +114,16 @@ public class ParseConnector {
         return query;
     }
 
-    private ParseQuery<Question> createQuestionQuery() {
+
+    private ParseQuery<Question> createQuestionsQuery() {
         ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
         query.whereExists("content");
         query.orderByDescending("createdAt");
+        return query;
+    }
+
+    private ParseQuery<Question> createQuestionQuery(){
+        ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
         return query;
     }
 

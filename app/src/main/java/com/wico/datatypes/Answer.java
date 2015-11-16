@@ -38,6 +38,10 @@ public class Answer extends ParseObject {
         return getString("content");
     }
 
+    public String getQuestionId(){
+        return getString("parentQuestionId");
+    }
+
     public String getAuthor(){
         //TODO: Next iteration will have support for users
         //this is just a placeholder

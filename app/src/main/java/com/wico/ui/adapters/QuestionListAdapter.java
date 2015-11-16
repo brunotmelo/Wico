@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
@@ -68,7 +66,9 @@ public class QuestionListAdapter extends ArrayAdapter<Question> {
                 content.setText(question.getContent());
             }
             if (answersNumber != null) {
-                answersNumber.setText(R.string.button_answers_text);
+                String answerText = view.getContext().getString(R.string.num_answers_text);
+                answerText = question.getNumberOfAnswers() + " " + answerText;
+                answersNumber.setText(answerText);
             }
         }
     }
