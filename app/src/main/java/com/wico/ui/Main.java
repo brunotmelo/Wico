@@ -5,21 +5,22 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wico.R;
-import com.wico.ui.threads.NetworkChecker;
 import com.wico.network.ParseConnector;
 import com.wico.ui.fragments.QuestionListFragment;
+import com.wico.ui.threads.NetworkChecker;
 
-public class Main extends AppCompatActivity {
+public class Main extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private TextView connectText;
     private QuestionListFragment listFragment;
@@ -65,7 +66,7 @@ public class Main extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CreateQuestionActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PageActivity.class);
                 startActivity(intent);
             }
         };
@@ -105,6 +106,8 @@ public class Main extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.toolbar_searchButton));
+        searchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -115,6 +118,17 @@ public class Main extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Toast.makeText(this, query, Toast.LENGTH_LONG).show();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 
 }

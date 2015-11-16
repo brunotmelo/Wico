@@ -6,4 +6,5 @@
 
     <dimen name="fab_size_small">40dp</dimen>
     <dimen name="fab_icon_size">24dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>

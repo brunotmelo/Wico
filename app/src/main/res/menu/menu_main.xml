@@ -2,10 +2,12 @@
     xmlns:wico="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".Main">
-    <item android:id="@+id/search"
+    <item
+        android:title="Search"
+        android:id="@+id/toolbar_searchButton"
         android:icon="@drawable/ic_search"
         wico:showAsAction="collapseActionView|ifRoom"
-        android:actionViewClass="android.widget.SearchView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

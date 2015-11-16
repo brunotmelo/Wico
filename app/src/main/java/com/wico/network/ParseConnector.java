@@ -7,6 +7,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.wico.datatypes.Answer;
+import com.wico.datatypes.WicoPage;
 import com.wico.datatypes.Question;
 import com.wico.exceptions.AlreadyInitializedException;
 import com.wico.exceptions.DisconectedFromParseException;
@@ -35,6 +36,7 @@ public class ParseConnector {
     public void registerParseSubclasses(){
         ParseObject.registerSubclass(Question.class);
         ParseObject.registerSubclass(Answer.class);
+        ParseObject.registerSubclass(WicoPage.class);
     }
 
     private void checkNotInitialized() {
@@ -95,6 +97,19 @@ public class ParseConnector {
         return questions;
     }
 
+    public ArrayList<Question> searchQuestions(String searchString){
+        checkConnection();
+        ParseQuery<Question> query = createSearchQuestionsQuery(searchString);
+        ArrayList<Question> questions = new ArrayList<>();
+        try {
+            questions.addAll(query.find());
+        } catch (ParseException e){
+            throw new WicoParseException();
+        }
+        return questions;
+
+    }
+
     public ArrayList<Answer> getAnswersForQuestion(String questionId) {
         checkConnection();
         ParseQuery<Answer> query = createAnswerQuery(questionId);
@@ -107,6 +122,7 @@ public class ParseConnector {
         return answers;
     }
 
+
     private ParseQuery<Answer> createAnswerQuery(String questionId) {
         ParseQuery<Answer> query = ParseQuery.getQuery(Answer.class);
         query.whereEqualTo("parentQuestionId", questionId);
@@ -114,6 +130,12 @@ public class ParseConnector {
         return query;
     }
 
+    private ParseQuery<Question> createSearchQuestionsQuery(String searchString){
+        ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
+        query.whereContains("title",searchString);
+        query.whereContains("content",searchString);
+        return query;
+    }
 
     private ParseQuery<Question> createQuestionsQuery() {
         ParseQuery<Question> query = ParseQuery.getQuery(Question.class);

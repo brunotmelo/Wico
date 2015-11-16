@@ -31,6 +31,11 @@
             android:label="@string/title_activity_question_and_answers"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".ui.PageActivity"
+            android:label="@string/title_activity_page"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>

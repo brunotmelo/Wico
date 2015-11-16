@@ -36,6 +36,12 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
             answerSaved();
         }
     };
+    private Thread.UncaughtExceptionHandler notSavedListener = new Thread.UncaughtExceptionHandler() {
+        @Override
+        public void uncaughtException(Thread thread, Throwable e) {
+            unableToSaveAnswer();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +82,11 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
         String answerText = answerInputText.getText().toString();
         Answer answer = new Answer.Builder().content(answerText).parentQuestionId(questionId).build();
         AnswerSaver saverThread = new AnswerSaver(answer, savedListener);
+        saverThread.setUncaughtExceptionHandler(notSavedListener);
         saverThread.start();
     }
 
-    //CallBack
+    //Callback
     private void answerSaved(){
         runOnUiThread(new Runnable() {
             @Override
@@ -89,7 +96,17 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
                 refreshContents();
             }
         });
+    }
 
+    //Exception Callback
+    private void unableToSaveAnswer() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                unlockInputUi();
+                sendNotSavedMessage();
+            }
+        });
     }
 
     private void lockInputUi(){
@@ -105,6 +122,10 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
 
     private void sendSavedMessage(){
         Toast.makeText(this, "Answer saved", Toast.LENGTH_SHORT).show();
+    }
+
+    private void sendNotSavedMessage(){
+        Toast.makeText(this,"An error ocurred, your answer was not saved", Toast.LENGTH_SHORT).show();
     }
 
     private void refreshContents(){
