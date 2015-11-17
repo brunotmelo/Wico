@@ -9,7 +9,7 @@
     <string name="title_activity_question_and_answers">Question</string>
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello wico page!</string>
     <string name="title_activity_page">PageActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
 

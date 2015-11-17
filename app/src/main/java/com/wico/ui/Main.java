@@ -9,6 +9,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,7 +56,7 @@ public class Main extends AppCompatActivity implements SearchView.OnQueryTextLis
     }
 
     private void startUiVariables() {
-        listFragment = (QuestionListFragment) getFragmentManager().findFragmentById(R.id.Main_questionListFragment);
+        listFragment = (QuestionListFragment) getSupportFragmentManager().findFragmentById(R.id.Main_questionListFragment);
         connectText = (TextView) findViewById(R.id.connectmessage);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
         floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getFabColor()));
@@ -67,6 +68,7 @@ public class Main extends AppCompatActivity implements SearchView.OnQueryTextLis
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), PageActivity.class);
+                intent.putExtra("pageId","000");
                 startActivity(intent);
             }
         };

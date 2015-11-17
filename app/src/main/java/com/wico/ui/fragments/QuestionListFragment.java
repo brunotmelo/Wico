@@ -1,9 +1,9 @@
 package com.wico.ui.fragments;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +32,22 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
      */
     private ListAdapter questionAdapter;
 
+    private static final String WICO_PAGE_ID = "param1";
+    private String wicoPageId;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public QuestionListFragment() {
+    }
+
+    public static QuestionListFragment newInstance(String wicoPageId) {
+        QuestionListFragment fragment = new QuestionListFragment();
+        Bundle args = new Bundle();
+        args.putString(WICO_PAGE_ID, wicoPageId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -51,6 +62,8 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         questionAdapter = new QuestionListAdapter(getActivity(), android.R.id.text1, questionList);
         mListView.setAdapter(questionAdapter);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
