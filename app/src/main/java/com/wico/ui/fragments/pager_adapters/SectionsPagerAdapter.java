@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.wico.ui.PageActivity;
 import com.wico.ui.fragments.PageContentViewFragment;
-import com.wico.ui.fragments.QuestionListFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -40,11 +39,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "SECTION 1";
+                return "Page";
             case 1:
-                return "SECTION 2";
+                return "Children";
             case 2:
-                return "SECTION 3";
+                return "Questions";
         }
         return null;
     }

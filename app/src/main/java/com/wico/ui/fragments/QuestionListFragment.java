@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
 import com.wico.ui.QuestionAndAnswersActivity;
 import com.wico.ui.adapters.QuestionListAdapter;
+import com.wico.ui.threads.NetworkChecker;
 
 import java.util.ArrayList;
 
@@ -25,12 +27,9 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
     private ListAdapter questionAdapter;
+
+    private TextView connectText;
 
     private static final String WICO_PAGE_ID = "param1";
     private String wicoPageId;
@@ -50,10 +49,54 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            this.wicoPageId = getArguments().getString(WICO_PAGE_ID);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_questionlist, container, false);
+        startUiVariables(view);
+        return view;
+    }
+
+    private void startUiVariables(View view){
+        connectText = (TextView) view.findViewById(R.id.connectmessage);
+        mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        waitInternetAndLoadContent();
+    }
+
+    public void waitInternetAndLoadContent() {
+        NetworkChecker checker = new NetworkChecker(getActivity());
+        checker.setNetworkCheckerListener(new NetworkChecker.NetworkCheckerListener() {
+            @Override
+            public void onConnected() {
+                connectedToInternet();
+            }
+        });
+        checker.start();
+    }
+
+    //callback
+    private void connectedToInternet() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                connectText.setVisibility(View.GONE);
+                loadQuestions();
+            }
+        });
     }
 
     public void loadQuestions() {
@@ -61,23 +104,6 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         ArrayList<Question> questionList = parseConnector.getQuestions();
         questionAdapter = new QuestionListAdapter(getActivity(), android.R.id.text1, questionList);
         mListView.setAdapter(questionAdapter);
-    }
-
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_questionlist, container, false);
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        mListView.setAdapter(questionAdapter);
-        mListView.setOnItemClickListener(this);
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override

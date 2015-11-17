@@ -9,7 +9,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +22,6 @@ import com.wico.ui.threads.NetworkChecker;
 
 public class Main extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
-    private TextView connectText;
-    private QuestionListFragment listFragment;
     private FloatingActionButton floatingActionButton;
 
     @Override
@@ -35,7 +32,6 @@ public class Main extends AppCompatActivity implements SearchView.OnQueryTextLis
         //setTransition();
         setToolbar();
         startUiVariables();
-        waitInternetAndLoadContent();
     }
 
 /*    private void setTransition() {
@@ -56,8 +52,6 @@ public class Main extends AppCompatActivity implements SearchView.OnQueryTextLis
     }
 
     private void startUiVariables() {
-        listFragment = (QuestionListFragment) getSupportFragmentManager().findFragmentById(R.id.Main_questionListFragment);
-        connectText = (TextView) findViewById(R.id.connectmessage);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fabNewQuestion);
         floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(getFabColor()));
         floatingActionButton.setOnClickListener(getFabClickListener());
@@ -78,30 +72,8 @@ public class Main extends AppCompatActivity implements SearchView.OnQueryTextLis
         return ContextCompat.getColor(this, R.color.colorAccent);
     }
 
-    public void waitInternetAndLoadContent() {
-        NetworkChecker checker = new NetworkChecker(this);
-        checker.setNetworkCheckerListener(new NetworkChecker.NetworkCheckerListener() {
-            @Override
-            public void onConnected() {
-                connectedToInternet();
-            }
-        });
-        checker.start();
-    }
-
-    private void connectedToInternet() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                connectText.setVisibility(View.GONE);
-                listFragment.loadQuestions();
-            }
-        });
-    }
-
     @Override
     public void onResume() {
-        waitInternetAndLoadContent();
         super.onResume();
     }
 
