@@ -153,43 +153,6 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
 
     private void attachAnswerList(ArrayList<Answer> answerList) {
         answersAdapter = new AnswerListAdapter(this, android.R.id.text1, answerList);
-        //addSwipeListener();
         answersListView.setAdapter(answersAdapter);
-
-        //answersListView.setOnItemClickListener(this);
     }
-
-    //variables for swipe handling
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
-    enum Direction {LEFT, RIGHT;}
-
-    private void addSwipeListener(){
-        answersListView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        historicX = event.getX();
-                        historicY = event.getY();
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        if (event.getX() - historicX < -DELTA) {
-                            Toast.makeText(getApplicationContext(),"slided left",Toast.LENGTH_SHORT).show();
-                            return true;
-                        } else if (event.getX() - historicX > DELTA) {
-//                            FunctionDeleteRowWhenSlidingRight();
-                            return true;
-                        }
-                        break;
-                    default:
-                        return false;
-                }
-                return false;
-            }
-        });
-    }
-
-
 }

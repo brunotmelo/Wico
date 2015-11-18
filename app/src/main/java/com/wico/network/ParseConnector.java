@@ -22,7 +22,8 @@ public class ParseConnector {
     public ParseConnector() {
     }
 
-    /**This method must be run in the first activity
+    /**Initializes connection to parse.
+     * This method must be run in the first activity
      * of the application.
      */
     public void initialize(Context context) {
@@ -33,7 +34,9 @@ public class ParseConnector {
         isConnected = true;
     }
 
-    public void registerParseSubclasses(){
+    //The registration of parseObjects is mandatory
+    //It has to be done before initializing parse
+    private void registerParseSubclasses(){
         ParseObject.registerSubclass(Question.class);
         ParseObject.registerSubclass(Answer.class);
         ParseObject.registerSubclass(WicoPage.class);

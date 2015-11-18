@@ -5,23 +5,24 @@
 
     <string name="num_answers_text">answers</string>
 
-<!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_question_and_answers">Question</string>
-
 
     <string name="hello_blank_fragment">Hello wico page!</string>
     <string name="title_activity_page">PageActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_create_page">Create New Page</string>
 
+<!-- Children PageVIew Fragment -->
+    <string name="pcv_unimplemented">Children pages placeholder</string>
+
 <!-- PageView Fragment Strings -->
     <string name="pv_loading_page">Page Loading</string>
 
-<!--Create Question Strings -->
+<!-- Create Question Strings -->
     <string name="cq_title">Title</string>
     <string name="cq_content">Question</string>
 
-<!--Create Page Strings -->
+<!-- Create Page Strings -->
     <string name="cp_title">Title</string>
     <string name="cp_content">Content</string>
 

@@ -17,10 +17,6 @@ public class AnswerListAdapter extends ArrayAdapter<Answer> {
 
     private View view;
 
-    public AnswerListAdapter(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
-    }
-
     public AnswerListAdapter(Context context, int resource, List<Answer> items) {
         super(context, resource, items);
     }
@@ -30,16 +26,8 @@ public class AnswerListAdapter extends ArrayAdapter<Answer> {
         view = convertView;
         inflateView();
         addAnswerToCell(position);
-        //view.setOnClickListener(cellListener);
         return view;
     }
-
-    private View.OnClickListener cellListener= new View.OnClickListener(){
-        public void onClick(View v) {
-            //get question from position
-            //Toast.makeText(getContext(), "Unable to save question", Toast.LENGTH_LONG).show();
-        }
-    };
 
     private void inflateView(){
         if (isViewEmpty()) {

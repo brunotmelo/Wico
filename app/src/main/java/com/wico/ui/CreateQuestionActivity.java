@@ -20,12 +20,15 @@ public class CreateQuestionActivity extends AppCompatActivity {
     private EditText title;
     private EditText content;
 
+    private String parentPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_question);
         setToolbar();
         startUiElements();
+        parentPath = getIntent().getStringExtra("parentPath");
     }
 
     private void setToolbar() {
@@ -57,7 +60,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
     private void getQuestionAndSave() {
         String title = getUiTitle();
         String content = getUiContent();
-        Question question = new Question.Builder().title(title).content(content).build();
+        Question question = new Question.Builder().title(title).content(content).parentPath(parentPath).build();
         saveQuestion(question);
         lockUi();
     }

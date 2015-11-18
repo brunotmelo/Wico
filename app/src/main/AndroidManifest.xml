@@ -12,12 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ui.Main"
+            android:name=".ui.PageActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,11 +30,7 @@
             android:label="@string/title_activity_question_and_answers"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity
-            android:name=".ui.PageActivity"
-            android:label="@string/title_activity_page"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+
         <activity
             android:name=".ui.CreatePageActivity"
             android:label="@string/title_activity_create_page"

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.wico.R;
+import com.wico.network.ParseConnector;
 import com.wico.ui.fragments.pager_adapters.SectionsPagerAdapter;
 
 public class PageActivity extends AppCompatActivity {
@@ -22,7 +23,6 @@ public class PageActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private String pagePath = "/Ball State University";
 
-
     private View.OnClickListener openCreatePageListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -31,7 +31,6 @@ public class PageActivity extends AppCompatActivity {
             startActivity(intent);
         }
     };
-
     private View.OnClickListener openCreateQuestionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -40,7 +39,6 @@ public class PageActivity extends AppCompatActivity {
             startActivity(intent);
         }
     };
-
     private View.OnClickListener openEditPageListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -53,33 +51,54 @@ public class PageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page);
+        connectToParse();
+        getPagePathFromIntent();
+        setToolbar();
+        startUiVariables();
+        setTabLayout();
+    }
 
+    private void connectToParse() {
+        ParseConnector connector = new ParseConnector();
+        connector.initialize(this);
+    }
+
+    private void getPagePathFromIntent() {
         Intent intent = getIntent();
         pagePath = intent.getStringExtra("pagePath");
         if (pagePath == null){
             //opens root page
             pagePath = "/Ball State University";
         }
+    }
 
+    private void setToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),pagePath);
+    }
 
+    private void startUiVariables(){
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         fab = (FloatingActionButton) findViewById(R.id.page_fab);
+    }
 
+    private void setTabLayout(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
+        tabLayout.setOnTabSelectedListener(getTabListener());
+    }
+
+    private TabLayout.ViewPagerOnTabSelectedListener getTabListener(){
+        return new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
                 int numTab = tab.getPosition();
-
                 overrideFloatingActionButton(numTab);
             }
-        });
+        };
     }
 
     private void overrideFloatingActionButton(int numTab){
@@ -120,12 +139,10 @@ public class PageActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
