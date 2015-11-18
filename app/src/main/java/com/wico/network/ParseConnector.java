@@ -64,6 +64,15 @@ public class ParseConnector {
         }
     }
 
+    public void storePage(WicoPage page){
+        checkConnection();
+        try {
+            page.save();
+        } catch (ParseException exception){
+            throw new WicoParseException();
+        }
+    }
+
     private void updateAnswersForQuestion(String questionId) {
         Question question = getQuestion(questionId);
         question.addAnswer();

@@ -12,5 +12,16 @@
     <string name="hello_blank_fragment">Hello wico page!</string>
     <string name="title_activity_page">PageActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_create_page">CreatePageActivity</string>
+
+    <!--Create Question Strings -->
+    <string name="cq_title">Title</string>
+    <string name="cq_content">Question</string>
+
+    <!--Create Page Strings -->
+    <string name="cp_title">Title</string>
+    <string name="cp_content">Content</string>
+
+
 
 </resources>

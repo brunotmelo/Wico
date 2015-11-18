@@ -5,7 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.wico.ui.PageActivity;
+import com.wico.ui.fragments.ChildrenPagesFragment;
 import com.wico.ui.fragments.PageContentViewFragment;
+import com.wico.ui.fragments.QuestionListFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -19,15 +21,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
         switch (position){
             case 0: return PageContentViewFragment.newInstance(pageId);
-            //case 1: return QuestionListFragment.newInstance(pageId);
-            default: return PageActivity.PlaceholderFragment.newInstance(position + 1);
+            case 2: return QuestionListFragment.newInstance(pageId);
+            default: return ChildrenPagesFragment.newInstance();
         }
     }
-
 
     @Override
     public int getCount() {
