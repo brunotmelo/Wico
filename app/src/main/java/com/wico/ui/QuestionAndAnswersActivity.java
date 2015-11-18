@@ -47,10 +47,16 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_and_answers);
+        setToolbar();
+        startUiVariables();
+        questionId = getIntent().getStringExtra("questionId");
+        setQuestionContents();
+        setButtonClickListener();
+        getAnswersAndAttach();
+    }
+
+    private void setToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        answerInputText = (EditText)findViewById(R.id.qa_answerbox);
-        sendAnswerButton = (FloatingActionButton) findViewById(R.id.qa_sendAnswerButton);
-        answersListView = (AbsListView) findViewById(R.id.qa_answerList);
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,12 +66,12 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
 
-        questionId = getIntent().getStringExtra("questionId");
-
-        setQuestionContents();
-        setButtonClickListener();
-        getAnswersAndAttach();
+    private void startUiVariables(){
+        answerInputText = (EditText)findViewById(R.id.qa_answerbox);
+        sendAnswerButton = (FloatingActionButton) findViewById(R.id.qa_sendAnswerButton);
+        answersListView = (AbsListView) findViewById(R.id.qa_answerList);
     }
 
     private void setButtonClickListener() {

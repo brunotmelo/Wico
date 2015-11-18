@@ -19,6 +19,8 @@ public class CreatePageActivity extends AppCompatActivity {
     private EditText titleInput;
     private EditText contentInput;
 
+    private String parentPath;
+
     private View.OnClickListener savePageListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -42,6 +44,7 @@ public class CreatePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_page);
+        parentPath = getIntent().getStringExtra("parentPath");
         setToolbar();
         startUiElements();
     }
@@ -60,17 +63,18 @@ public class CreatePageActivity extends AppCompatActivity {
     }
 
     private void startUiElements(){
-        titleInput = (EditText) findViewById(R.id.titleEditText);
-        contentInput = (EditText) findViewById(R.id.contentEditText);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        titleInput = (EditText) findViewById(R.id.cp_titleEditText);
+        contentInput = (EditText) findViewById(R.id.cp_contentEditText);
+        fab = (FloatingActionButton) findViewById(R.id.cp_fab);
         fab.setOnClickListener(savePageListener);
     }
 
     private void getPageAndSave(){
-        lockInputUi();
+        lockUi();
         String title = getUiTitle();
         String content = getUiContent();
-        WicoPage page = new WicoPage.Builder().title(title).content(content).path("/").build();
+        String childrenPagePath = parentPath + "/" + title;
+        WicoPage page = new WicoPage.Builder().title(title).content(content).path(childrenPagePath).build();
         savePage(page);
     }
 
@@ -85,8 +89,9 @@ public class CreatePageActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                unlockInputUi();
+                unlockUi();
                 sendSavedMessage();
+                closeActivity();
             }
         });
     }
@@ -96,7 +101,7 @@ public class CreatePageActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                unlockInputUi();
+                unlockUi();
                 sendNotSavedMessage();
             }
         });
@@ -110,16 +115,17 @@ public class CreatePageActivity extends AppCompatActivity {
         Toast.makeText(this,"An error ocurred, the page was not saved", Toast.LENGTH_SHORT).show();
     }
 
-    private void lockInputUi(){
+    private void lockUi(){
         titleInput.setEnabled(false);
         contentInput.setEnabled(false);
         fab.setEnabled(false);
     }
 
-    private void unlockInputUi(){
+    private void unlockUi(){
         titleInput.setEnabled(true);
         contentInput.setEnabled(true);
         fab.setEnabled(true);
+        closeActivity();
     }
 
     private String getUiTitle() {
@@ -130,5 +136,8 @@ public class CreatePageActivity extends AppCompatActivity {
         return contentInput.getText().toString();
     }
 
+    private void closeActivity() {
+        onBackPressed();
+    }
 
 }

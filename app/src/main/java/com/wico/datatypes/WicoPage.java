@@ -7,9 +7,9 @@ import com.parse.ParseObject;
 public class WicoPage extends ParseObject {
 
     public static final class Builder{
-        private String path;
         private String title;
         private String content;
+        private String path;
 
 
         public Builder title(String title){
@@ -40,11 +40,20 @@ public class WicoPage extends ParseObject {
     private WicoPage(Builder builder){
         put("title", builder.title);
         put("content",builder.content);
-        put("parent",builder.path);
+        put("path",builder.path);
     }
 
+    public String getTitle(){
+        return getString("title");
+    }
 
+    public String getContent(){
+        return getString("content");
+    }
 
+    public String getPath(){
+        return getString("path");
+    }
 
 
 }

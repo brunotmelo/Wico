@@ -101,7 +101,7 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
 
     public void loadQuestions() {
         ParseConnector parseConnector = new ParseConnector();
-        ArrayList<Question> questionList = parseConnector.getQuestions();
+        ArrayList<Question> questionList = parseConnector.getQuestions(wicoPageId);
         questionAdapter = new QuestionListAdapter(getActivity(), android.R.id.text1, questionList);
         mListView.setAdapter(questionAdapter);
     }

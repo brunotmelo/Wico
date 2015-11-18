@@ -45,6 +45,15 @@ public class ParseConnector {
         }
     }
 
+    public void storePage(WicoPage page){
+        checkConnection();
+        try {
+            page.save();
+        } catch (ParseException exception){
+            throw new WicoParseException();
+        }
+    }
+
     public void storeQuestion(Question question) {
         checkConnection();
         try {
@@ -64,15 +73,6 @@ public class ParseConnector {
         }
     }
 
-    public void storePage(WicoPage page){
-        checkConnection();
-        try {
-            page.save();
-        } catch (ParseException exception){
-            throw new WicoParseException();
-        }
-    }
-
     private void updateAnswersForQuestion(String questionId) {
         Question question = getQuestion(questionId);
         question.addAnswer();
@@ -84,19 +84,31 @@ public class ParseConnector {
     }
 
     private Question getQuestion(String questionId){
-        ParseQuery<Question> query = createQuestionQuery();
+        ParseQuery<Question> query = createQuestionQuery(questionId);
         Question question = null;
         try {
-            question = query.get(questionId);
+            question = query.getFirst();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return question;
     }
 
-    public ArrayList<Question> getQuestions() {
+    public WicoPage loadPage(String path){
         checkConnection();
-        ParseQuery<Question> query = createQuestionsQuery();
+        ParseQuery<WicoPage> query = createPageQuery(path);
+        WicoPage page;
+        try {
+            page = query.getFirst();
+        } catch (ParseException e){
+            throw new WicoParseException();
+        }
+        return page;
+    }
+
+    public ArrayList<Question> getQuestions(String parentPagePath) {
+        checkConnection();
+        ParseQuery<Question> query = createQuestionsQuery(parentPagePath);
         ArrayList<Question> questions = new ArrayList<>();
         try {
             questions.addAll(query.find());
@@ -131,6 +143,25 @@ public class ParseConnector {
         return answers;
     }
 
+    private ParseQuery<WicoPage> createPageQuery(String pagePath){
+        ParseQuery<WicoPage> query = ParseQuery.getQuery(WicoPage.class);
+        query.whereEqualTo("path", pagePath);
+        return query;
+    }
+
+    private ParseQuery<Question> createQuestionsQuery(String pagePath) {
+        ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
+        query.whereEqualTo("parentPath", pagePath);
+        query.whereExists("content");
+        query.orderByDescending("createdAt");
+        return query;
+    }
+
+    private ParseQuery<Question> createQuestionQuery(String questionId){
+        ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
+        query.whereEqualTo("objectId",questionId);
+        return query;
+    }
 
     private ParseQuery<Answer> createAnswerQuery(String questionId) {
         ParseQuery<Answer> query = ParseQuery.getQuery(Answer.class);
@@ -141,20 +172,8 @@ public class ParseConnector {
 
     private ParseQuery<Question> createSearchQuestionsQuery(String searchString){
         ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
-        query.whereContains("title",searchString);
+        query.whereContains("title", searchString);
         query.whereContains("content",searchString);
-        return query;
-    }
-
-    private ParseQuery<Question> createQuestionsQuery() {
-        ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
-        query.whereExists("content");
-        query.orderByDescending("createdAt");
-        return query;
-    }
-
-    private ParseQuery<Question> createQuestionQuery(){
-        ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
         return query;
     }
 

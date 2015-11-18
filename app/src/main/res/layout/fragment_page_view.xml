@@ -4,8 +4,9 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:padding="10dp"
         android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        android:id="@+id/wp_testText" />
+        android:text="@string/pv_loading_page"
+        android:id="@+id/pv_markdownText" />
 
 </FrameLayout>

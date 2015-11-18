@@ -4,28 +4,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.wico.ui.PageActivity;
 import com.wico.ui.fragments.ChildrenPagesFragment;
 import com.wico.ui.fragments.PageContentViewFragment;
 import com.wico.ui.fragments.QuestionListFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+    private String pagePath;
 
-    private String pageId;
 
-    public SectionsPagerAdapter(FragmentManager fm, String pageId) {
+    public SectionsPagerAdapter(FragmentManager fm, String pagePath) {
         super(fm);
-        this.pageId = pageId;
+        this.pagePath = pagePath;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0: return PageContentViewFragment.newInstance(pageId);
-            case 2: return QuestionListFragment.newInstance(pageId);
-            default: return ChildrenPagesFragment.newInstance();
+            case 0: System.out.println(pagePath);
+                return PageContentViewFragment.newInstance(pagePath);
+            case 1: return ChildrenPagesFragment.newInstance();
+            case 2: return QuestionListFragment.newInstance(pagePath);
         }
+        return null;
     }
 
     @Override

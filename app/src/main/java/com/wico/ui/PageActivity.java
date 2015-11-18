@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +20,14 @@ public class PageActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
+    private String pagePath = "/Ball State University";
+
 
     private View.OnClickListener openCreatePageListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getApplicationContext(),CreatePageActivity.class);
+            intent.putExtra("parentPath",pagePath);
             startActivity(intent);
         }
     };
@@ -34,7 +36,16 @@ public class PageActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(getApplicationContext(),CreateQuestionActivity.class);
+            intent.putExtra("parentPath",pagePath);
             startActivity(intent);
+        }
+    };
+
+    private View.OnClickListener openEditPageListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //loaded when the page tab is selected
+            //needed to remove the other listeners
         }
     };
 
@@ -43,9 +54,16 @@ public class PageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page);
 
+        Intent intent = getIntent();
+        pagePath = intent.getStringExtra("pagePath");
+        if (pagePath == null){
+            //opens root page
+            pagePath = "/Ball State University";
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),"pageid");
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),pagePath);
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -76,12 +94,12 @@ public class PageActivity extends AppCompatActivity {
     }
 
     private void fabEditsPage(){
-        //fab.setOnClickListener(openEditPageListener);
+        fab.setOnClickListener(openEditPageListener);
         Drawable editIcon = getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp);
         fab.setImageDrawable(editIcon);
     }
 
-    private void fabAddsPage(){
+    private void fabAddsPage() {
         fab.setOnClickListener(openCreatePageListener);
         Drawable addIcon = getResources().getDrawable(R.drawable.ic_add);
         fab.setImageDrawable(addIcon);
@@ -89,7 +107,7 @@ public class PageActivity extends AppCompatActivity {
 
     private void fabAddsQuestion(){
         fab.setOnClickListener(openCreateQuestionListener);
-        Drawable addIcon = getResources().getDrawable(R.drawable.ic_add);
+        Drawable addIcon = getResources().getDrawable(R.drawable.ic_send_white_24dp);
         fab.setImageDrawable(addIcon);
     }
 

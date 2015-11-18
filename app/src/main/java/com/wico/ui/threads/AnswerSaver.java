@@ -16,8 +16,8 @@ public class AnswerSaver extends Thread{
 
     @Override
     public void run(){
-        ParseConnector parse = new ParseConnector();
-        parse.storeAnswer(answer);
+        ParseConnector connector = new ParseConnector();
+        connector.storeAnswer(answer);
         listener.onAnswerSaved();
     }
 
