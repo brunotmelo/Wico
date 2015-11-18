@@ -21,12 +21,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0: System.out.println(pagePath);
-                return PageContentViewFragment.newInstance(pagePath);
+            case 0: return PageContentViewFragment.newInstance(pagePath);
             case 1: return ChildrenPagesFragment.newInstance();
             case 2: return QuestionListFragment.newInstance(pagePath);
+            default: return null;
         }
-        return null;
     }
 
     @Override

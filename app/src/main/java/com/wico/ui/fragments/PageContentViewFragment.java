@@ -66,8 +66,13 @@ public class PageContentViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_view, container, false);
         pageContent = (TextView)view.findViewById(R.id.pv_markdownText);
-        getWicoPage();
         return view;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        getWicoPage();
     }
 
     private void getWicoPage(){
@@ -88,7 +93,6 @@ public class PageContentViewFragment extends Fragment {
         pageContent.setText(string);
         pageContent.setMovementMethod(LinkMovementMethod.getInstance());
         pageContent.setHighlightColor(Color.GREEN);
-        pageContent.setText(wicoPagePath);
     }
 
     //error callback
