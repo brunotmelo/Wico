@@ -24,6 +24,7 @@ public class PageContentViewFragment extends Fragment {
 
     private String wicoPagePath;
     private WicoPage page;
+    private boolean loading = false;
 
     private TextView pageContent;
 
@@ -72,7 +73,10 @@ public class PageContentViewFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        getWicoPage();
+        if(!loading){
+            loading = true;
+            getWicoPage();
+        }
     }
 
     private void getWicoPage(){
@@ -84,7 +88,13 @@ public class PageContentViewFragment extends Fragment {
     //callBack
     private void pageLoaded(WicoPage page){
         this.page = page;
-        loadMarkDownText();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadMarkDownText();
+            }
+        });
+        loading = false;
     }
 
     private void loadMarkDownText(){

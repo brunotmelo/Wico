@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 public class QuestionListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
+    private boolean loading = false;
+
     /**
      * The fragment's ListView/GridView.
      */
@@ -74,7 +76,11 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
     @Override
     public void onResume() {
         super.onResume();
-        waitInternetAndLoadContent();
+        if(!loading){
+            waitInternetAndLoadContent();
+            loading = true;
+        }
+
     }
 
     public void waitInternetAndLoadContent() {
@@ -97,6 +103,7 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
                 loadQuestions();
             }
         });
+        loading = false;
     }
 
     public void loadQuestions() {
