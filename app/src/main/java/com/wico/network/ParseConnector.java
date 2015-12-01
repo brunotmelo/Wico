@@ -27,11 +27,12 @@ public class ParseConnector {
      * of the application.
      */
     public void initialize(Context context) {
-        checkNotInitialized();
-        Parse.enableLocalDatastore(context);
-        registerParseSubclasses();
-        Parse.initialize(context, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
-        isConnected = true;
+        if(!isConnected){
+            Parse.enableLocalDatastore(context);
+            registerParseSubclasses();
+            Parse.initialize(context, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
+            isConnected = true;
+        }
     }
 
     //The registration of parseObjects is mandatory
@@ -40,12 +41,6 @@ public class ParseConnector {
         ParseObject.registerSubclass(Question.class);
         ParseObject.registerSubclass(Answer.class);
         ParseObject.registerSubclass(WicoPage.class);
-    }
-
-    private void checkNotInitialized() {
-        if (isConnected) {
-            throw new AlreadyInitializedException();
-        }
     }
 
     public void storePage(WicoPage page){

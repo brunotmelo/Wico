@@ -14,6 +14,9 @@ import com.wico.R;
 import com.wico.datatypes.WicoPage;
 import com.wico.ui.threads.PageLoader;
 import com.wico.ui.threads.listeners.PageLoadedListener;
+import com.wico.ui.util.LinkCreator;
+
+import org.w3c.dom.Text;
 
 import in.uncod.android.bypass.Bypass;
 
@@ -100,9 +103,10 @@ public class PageContentViewFragment extends Fragment {
     private void loadMarkDownText(){
         Bypass bypass = new Bypass();
         CharSequence string = bypass.markdownToSpannable(page.getContent());
-        pageContent.setText(string);
-        pageContent.setMovementMethod(LinkMovementMethod.getInstance());
-        pageContent.setHighlightColor(Color.GREEN);
+        LinkCreator linkCreator = new LinkCreator();
+        linkCreator.addLinks(getContext(), string, pageContent);
+        //pageContent.setText(string);
+        //pageContent.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     //error callback

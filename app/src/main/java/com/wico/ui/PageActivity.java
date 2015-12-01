@@ -42,6 +42,7 @@ public class PageActivity extends AppCompatActivity {
     private View.OnClickListener openEditPageListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //TogglePageEdit
             //loaded when the page tab is selected
             //needed to remove the other listeners
         }
@@ -126,7 +127,7 @@ public class PageActivity extends AppCompatActivity {
 
     private void fabAddsQuestion(){
         fab.setOnClickListener(openCreateQuestionListener);
-        Drawable addIcon = getResources().getDrawable(R.drawable.ic_send_white_24dp);
+        Drawable addIcon = getResources().getDrawable(R.drawable.ic_add);
         fab.setImageDrawable(addIcon);
     }
 
