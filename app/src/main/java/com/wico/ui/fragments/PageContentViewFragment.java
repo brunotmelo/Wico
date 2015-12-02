@@ -109,4 +109,12 @@ public class PageContentViewFragment extends Fragment {
     private void unableToLoadPage(){
         Toast.makeText(getActivity(),"An error ocurred while loading the page", Toast.LENGTH_SHORT).show();
     }
+
+    public void enableEdit(){
+        pageContent.setText("basudbsadkaslkasd");
+        //view.setVisibility(View.GONE);
+        //EditText edit = (EditText)findViewById(R.id.pv_editText);
+        //edit.setVisibility(View.VISIBLE);
+    }
+
 }

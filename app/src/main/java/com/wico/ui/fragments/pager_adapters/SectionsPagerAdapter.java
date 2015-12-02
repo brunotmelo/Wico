@@ -12,7 +12,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private String pagePath;
 
-
     public SectionsPagerAdapter(FragmentManager fm, String pagePath) {
         super(fm);
         this.pagePath = pagePath;

@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.wico.ui.fragments.PageContentViewFragment">
+    android:layout_height="match_parent" tools:context="com.wico.ui.fragments.PageContentViewFragment"
+    android:id="@+id/pageViewFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -8,5 +9,15 @@
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:text="@string/pv_loading_page"
         android:id="@+id/pv_markdownText" />
+
+    <EditText
+        android:id="@+id/pv_editText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_gravity="left|top"
+        android:visibility="invisible"
+        android:hint="An h1 header ============  Paragraphs are separated by a blank line.  2nd paragraph. *Italic*, **bold**, and `monospace`. Itemized lists look like:    * this one   * that one   * the other one  Note that --- not [/Ball State University] considering the asterisk --- the actual text content starts at 4-columns in.  > Block quotes are > written like so. > > They can span multiple paragraphs, > if you like.  Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., &quot;it&apos;s all in chapters 12--14&quot;). Three dots ... will be converted to an ellipsis." />
 
 </FrameLayout>
