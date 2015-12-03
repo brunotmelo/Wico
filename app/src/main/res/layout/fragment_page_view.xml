@@ -1,11 +1,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.wico.ui.fragments.PageContentViewFragment"
-    android:id="@+id/pageViewFragment">
+    android:id="@+id/pageViewFragment"
+    android:paddingBottom="60dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:clipToPadding="false"
+    >
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:padding="10dp"
+
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:text="@string/pv_loading_page"
         android:id="@+id/pv_markdownText" />
