@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +29,9 @@ public class QuestionListFragment extends ActivityFabOverriderFragment implement
     private View.OnClickListener fabCallBack = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-                /*Intent intent = new Intent(getActivity(),CreateQuestionActivity.class);
-                intent.putExtra("parentPath",pagePath);
-                startActivity(intent);*/
+                Intent intent = new Intent(getActivity(),CreateQuestionActivity.class);
+                intent.putExtra("parentPageId",wicoPageId);
+                startActivity(intent);
         }
     };
 
@@ -91,7 +90,6 @@ public class QuestionListFragment extends ActivityFabOverriderFragment implement
             waitInternetAndLoadContent();
             loading = true;
         }
-
     }
 
     public void waitInternetAndLoadContent() {

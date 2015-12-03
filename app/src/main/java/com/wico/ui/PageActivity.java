@@ -20,7 +20,8 @@ public class PageActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
-    private String pagePath = "/Ball State University";
+    public static final String MASTER_PAGE_ID = "iEmjO2Xvs2";
+    private String pageId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +41,16 @@ public class PageActivity extends AppCompatActivity {
 
     private void getPagePathFromIntent() {
         Intent intent = getIntent();
-        pagePath = intent.getStringExtra("pagePath");
-        if (pagePath == null){
-            //opens root page
-            pagePath = "/Ball State University";
+        pageId = intent.getStringExtra("pageId");
+        if (pageId == null){
+            pageId = MASTER_PAGE_ID;
         }
     }
 
     private void setToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),pagePath);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), pageId);
     }
 
     private void startUiVariables(){
@@ -71,12 +71,12 @@ public class PageActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
                 int numTab = tab.getPosition();
-                overrideFloatingActionButton(numTab);
+                overrideFabForCurrentTab(numTab);
             }
         };
     }
 
-    private void overrideFloatingActionButton(int numTab){
+    private void overrideFabForCurrentTab(int numTab){
         ActivityFabOverriderFragment fragment = mSectionsPagerAdapter.getRegisteredFragment(numTab);
         fragment.overrideFab(fab);
     }

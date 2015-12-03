@@ -109,9 +109,9 @@ public class ParseConnector {
         return page;
     }
 
-    public ArrayList<Question> getQuestions(String parentPagePath) {
+    public ArrayList<Question> getQuestions(String parentPageId) {
         checkConnection();
-        ParseQuery<Question> query = createQuestionsQuery(parentPagePath);
+        ParseQuery<Question> query = createQuestionsQuery(parentPageId);
         ArrayList<Question> questions = new ArrayList<>();
         try {
             questions.addAll(query.find());
@@ -146,15 +146,15 @@ public class ParseConnector {
         return answers;
     }
 
-    private ParseQuery<WicoPage> createPageQuery(String pagePath){
+    private ParseQuery<WicoPage> createPageQuery(String pageId){
         ParseQuery<WicoPage> query = ParseQuery.getQuery(WicoPage.class);
-        query.whereEqualTo("path", pagePath);
+        query.whereEqualTo("objectId", pageId);
         return query;
     }
 
-    private ParseQuery<Question> createQuestionsQuery(String pagePath) {
+    private ParseQuery<Question> createQuestionsQuery(String pageId) {
         ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
-        query.whereEqualTo("parentPath", pagePath);
+        query.whereEqualTo("parentId", pageId);
         query.whereExists("content");
         query.orderByDescending("createdAt");
         return query;

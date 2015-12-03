@@ -1,6 +1,5 @@
 package com.wico.ui.fragments.pager_adapters;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
@@ -13,20 +12,20 @@ import com.wico.ui.fragments.QuestionListFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private String pagePath;
+    private String pageId;
     SparseArray<ActivityFabOverriderFragment> registeredFragments = new SparseArray<>();
 
-    public SectionsPagerAdapter(FragmentManager fm, String pagePath) {
+    public SectionsPagerAdapter(FragmentManager fm, String pageId) {
         super(fm);
-        this.pagePath = pagePath;
+        this.pageId = pageId;
     }
 
     @Override
     public ActivityFabOverriderFragment getItem(int position) {
         switch (position){
-            case 0: return PageContentViewFragment.newInstance(pagePath);
-            case 1: return ChildrenPagesFragment.newInstance();
-            case 2: return QuestionListFragment.newInstance(pagePath);
+            case 0: return PageContentViewFragment.newInstance(pageId);
+            case 1: return ChildrenPagesFragment.newInstance(pageId);
+            case 2: return QuestionListFragment.newInstance(pageId);
             default: return null;
         }
     }

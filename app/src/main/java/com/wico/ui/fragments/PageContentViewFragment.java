@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,9 @@ import in.uncod.android.bypass.Bypass;
 
 public class PageContentViewFragment extends ActivityFabOverriderFragment {
 
-    private static final String WICO_PAGE_PATH = "param1";
+    private static final String WICO_PAGE_ID = "param1";
 
-    private String wicoPagePath;
+    private String wicoPageId;
     private WicoPage page;
     private boolean loading = false;
 
@@ -51,10 +50,10 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
     };
 
 
-    public static PageContentViewFragment newInstance(String wicoPagePath) {
+    public static PageContentViewFragment newInstance(String wicoPageId) {
         PageContentViewFragment fragment = new PageContentViewFragment();
         Bundle args = new Bundle();
-        args.putString(WICO_PAGE_PATH, wicoPagePath);
+        args.putString(WICO_PAGE_ID, wicoPageId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +66,7 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.wicoPagePath = getArguments().getString(WICO_PAGE_PATH);
+            this.wicoPageId = getArguments().getString(WICO_PAGE_ID);
         }
     }
 
@@ -89,7 +88,7 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
     }
 
     private void getWicoPage(){
-        PageLoader pageLoaderThread = new PageLoader(wicoPagePath, loadedListener);
+        PageLoader pageLoaderThread = new PageLoader(wicoPageId, loadedListener);
         pageLoaderThread.setUncaughtExceptionHandler(notLoadedListener);
         pageLoaderThread.start();
     }

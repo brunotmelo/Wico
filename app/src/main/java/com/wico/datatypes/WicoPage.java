@@ -9,7 +9,7 @@ public class WicoPage extends ParseObject {
     public static final class Builder{
         private String title;
         private String content;
-        private String path;
+        private String parentId;
 
 
         public Builder title(String title){
@@ -22,8 +22,8 @@ public class WicoPage extends ParseObject {
             return this;
         }
 
-        public Builder path(String path){
-            this.path = path;
+        public Builder parentId(String parentId){
+            this.parentId = parentId;
             return this;
         }
 
@@ -40,7 +40,7 @@ public class WicoPage extends ParseObject {
     private WicoPage(Builder builder){
         put("title", builder.title);
         put("content",builder.content);
-        put("path",builder.path);
+        put("parentId",builder.parentId);
     }
 
     public String getTitle(){
