@@ -2,7 +2,9 @@ package com.wico.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,15 +17,24 @@ import android.widget.TextView;
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
+import com.wico.ui.CreateQuestionActivity;
 import com.wico.ui.QuestionAndAnswersActivity;
 import com.wico.ui.adapters.QuestionListAdapter;
 import com.wico.ui.threads.NetworkChecker;
 
 import java.util.ArrayList;
 
-public class QuestionListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class QuestionListFragment extends ActivityFabOverriderFragment implements AbsListView.OnItemClickListener {
 
     private boolean loading = false;
+    private View.OnClickListener fabCallBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+                /*Intent intent = new Intent(getActivity(),CreateQuestionActivity.class);
+                intent.putExtra("parentPath",pagePath);
+                startActivity(intent);*/
+        }
+    };
 
     /**
      * The fragment's ListView/GridView.
@@ -133,4 +144,10 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         startActivity(intent);
     }
 
+    @Override
+    public void overrideFab(FloatingActionButton fab){
+        fab.setOnClickListener(fabCallBack);
+        Drawable editIcon = getResources().getDrawable(R.drawable.ic_add);
+        fab.setImageDrawable(editIcon);
+    }
 }

@@ -1,7 +1,9 @@
 package com.wico.ui.fragments;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -18,7 +20,7 @@ import com.wico.ui.threads.listeners.PageLoadedListener;
 import in.uncod.android.bypass.Bypass;
 
 
-public class PageContentViewFragment extends Fragment {
+public class PageContentViewFragment extends ActivityFabOverriderFragment {
 
     private static final String WICO_PAGE_PATH = "param1";
 
@@ -27,6 +29,13 @@ public class PageContentViewFragment extends Fragment {
     private boolean loading = false;
 
     private TextView pageContent;
+
+    private View.OnClickListener fabCallBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            enableEdit();
+        }
+    };
 
     private PageLoadedListener loadedListener = new PageLoadedListener(){
         @Override
@@ -110,11 +119,19 @@ public class PageContentViewFragment extends Fragment {
         Toast.makeText(getActivity(),"An error ocurred while loading the page", Toast.LENGTH_SHORT).show();
     }
 
-    public void enableEdit(){
+    private void enableEdit(){
         pageContent.setText("basudbsadkaslkasd");
         //view.setVisibility(View.GONE);
         //EditText edit = (EditText)findViewById(R.id.pv_editText);
         //edit.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void overrideFab(FloatingActionButton fab){
+        fab.setOnClickListener(fabCallBack);
+        Drawable editIcon = getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp);
+        fab.setImageDrawable(editIcon);
+    }
+
 
 }

@@ -2,7 +2,9 @@ package com.wico.ui.fragments;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +13,18 @@ import android.view.ViewGroup;
 import com.wico.R;
 import com.wico.ui.CreatePageActivity;
 
-public class ChildrenPagesFragment extends Fragment{
+public class ChildrenPagesFragment extends ActivityFabOverriderFragment{
 
-        public static ChildrenPagesFragment newInstance() {
+    private View.OnClickListener fabCallBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+                /*Intent intent = new Intent(getActivity(),CreatePageActivity.class);
+                intent.putExtra("parentPath",pagePath);
+                startActivity(intent);*/
+        }
+    };
+
+    public static ChildrenPagesFragment newInstance() {
         ChildrenPagesFragment fragment = new ChildrenPagesFragment();
         return fragment;
     }
@@ -37,6 +48,13 @@ public class ChildrenPagesFragment extends Fragment{
     @Override
     public void onResume(){
         super.onResume();
+    }
+
+    @Override
+    public void overrideFab(FloatingActionButton fab){
+        fab.setOnClickListener(fabCallBack);
+        Drawable editIcon = getResources().getDrawable(R.drawable.ic_add);
+        fab.setImageDrawable(editIcon);
     }
 
 }
