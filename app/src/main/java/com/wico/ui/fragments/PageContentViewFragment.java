@@ -8,6 +8,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +27,10 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
     private String wicoPageId;
     private WicoPage page;
     private boolean loading = false;
+    //private boolean editing = false;
 
     private TextView pageContent;
+    private EditText editPageContent;
 
     private View.OnClickListener fabCallBack = new View.OnClickListener() {
         @Override
@@ -75,6 +78,7 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_view, container, false);
         pageContent = (TextView)view.findViewById(R.id.pv_markdownText);
+        editPageContent = (EditText)view.findViewById(R.id.pv_editText);
         return view;
     }
 
@@ -119,10 +123,9 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
     }
 
     private void enableEdit(){
-        pageContent.setText("basudbsadkaslkasd");
-        //view.setVisibility(View.GONE);
-        //EditText edit = (EditText)findViewById(R.id.pv_editText);
-        //edit.setVisibility(View.VISIBLE);
+        //pageContent.setText("basudbsadkaslkasd");
+        pageContent.setVisibility(View.GONE);
+        editPageContent.setVisibility(View.VISIBLE);
     }
 
     @Override
