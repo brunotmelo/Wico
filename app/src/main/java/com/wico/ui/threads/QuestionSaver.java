@@ -15,7 +15,7 @@ public class QuestionSaver extends Thread{
 
     public void run(){
         ParseConnector parse = new ParseConnector();
-        parse.storeQuestion(question);
+        parse.store(question);
         savingQuestionActivity.onQuestionSaved();
     }
 

@@ -18,6 +18,8 @@ import com.wico.ui.fragments.pager_adapters.SectionsPagerAdapter;
 
 public class PageActivity extends AppCompatActivity {
 
+    public boolean isTesting = false;
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
@@ -46,6 +48,7 @@ public class PageActivity extends AppCompatActivity {
             //needed to remove the other listeners
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,7 +16,7 @@ public class WicoPageSaver extends Thread{
     @Override
     public void run(){
         ParseConnector connector = new ParseConnector();
-        connector.storePage(page);
+        connector.store(page);
         listener.onPageSaved();
     }
 }
