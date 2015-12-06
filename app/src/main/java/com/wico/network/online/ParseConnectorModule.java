@@ -1,11 +1,11 @@
-package com.wico.util;
+package com.wico.network.online;
 
-import com.wico.network.OnlineParseInitializer;
-import com.wico.network.OnlineParseObjectRetriever;
-import com.wico.network.OnlineParseObjectStorer;
-import com.wico.network.ParseInitializer;
-import com.wico.network.ParseObjectRetriever;
-import com.wico.network.ParseObjectStorer;
+import com.wico.network.online.OnlineParseInitializer;
+import com.wico.network.online.OnlineParseObjectRetriever;
+import com.wico.network.online.OnlineParseObjectStorer;
+import com.wico.network.interfaces.ParseInitializer;
+import com.wico.network.interfaces.ParseObjectRetriever;
+import com.wico.network.interfaces.ParseObjectStorer;
 
 import javax.inject.Singleton;
 

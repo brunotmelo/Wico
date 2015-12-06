@@ -1,4 +1,4 @@
-package com.wico.network;
+package com.wico.network.online;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import com.parse.ParseObject;
 import com.wico.datatypes.Answer;
 import com.wico.datatypes.Question;
 import com.wico.datatypes.WicoPage;
+import com.wico.network.interfaces.ParseInitializer;
 
 public class OnlineParseInitializer implements ParseInitializer {
 

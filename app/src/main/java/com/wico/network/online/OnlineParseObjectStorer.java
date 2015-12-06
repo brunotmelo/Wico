@@ -1,10 +1,12 @@
-package com.wico.network;
+package com.wico.network.online;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.wico.datatypes.Answer;
 import com.wico.datatypes.Question;
 import com.wico.exceptions.WicoParseException;
+import com.wico.network.interfaces.ParseObjectRetriever;
+import com.wico.network.interfaces.ParseObjectStorer;
 
 public class OnlineParseObjectStorer implements ParseObjectStorer {
 

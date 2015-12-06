@@ -1,4 +1,4 @@
-package com.wico.network;
+package com.wico.network.interfaces;
 
 import com.wico.datatypes.Answer;
 import com.wico.datatypes.Question;

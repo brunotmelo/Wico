@@ -11,6 +11,7 @@ buildscript {
         // in the individual module build.gradle files
         // Required to enable dagger code generation
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+
     }
 }
 
