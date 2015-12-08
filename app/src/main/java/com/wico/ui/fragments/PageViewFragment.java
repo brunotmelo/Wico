@@ -176,6 +176,7 @@ public class PageViewFragment extends ActivityFabOverriderFragment {
         overrideFab(fab);
         pageContent.setVisibility(View.VISIBLE);
         editPageContent.setVisibility(View.INVISIBLE);
+        Toast.makeText(getActivity(), "Page Updated", Toast.LENGTH_SHORT).show();
 
     }
 
