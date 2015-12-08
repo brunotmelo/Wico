@@ -9,11 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.wico.R;
 import com.wico.network.ParseConnector;
 import com.wico.ui.fragments.ActivityFabOverriderFragment;
-import com.wico.ui.fragments.pager_adapters.SectionsPagerAdapter;
+import com.wico.ui.adapters.SectionsPagerAdapter;
 
 public class PageActivity extends AppCompatActivity {
 
@@ -22,6 +23,15 @@ public class PageActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     public static final String MASTER_PAGE_ID = "iEmjO2Xvs2";
     private String pageId;
+
+    private View.OnClickListener defaultFabCallBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            overrideFabForCurrentTab(0);
+            fab.performClick();
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,7 @@ public class PageActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         fab = (FloatingActionButton) findViewById(R.id.page_fab);
+        fab.setOnClickListener(defaultFabCallBack);
     }
 
     private void setTabLayout(){

@@ -15,12 +15,14 @@ import android.widget.Toast;
 import com.wico.R;
 import com.wico.datatypes.WicoPage;
 import com.wico.ui.threads.PageLoader;
+import com.wico.ui.threads.WicoPageSaver;
 import com.wico.ui.threads.listeners.PageLoadedListener;
+import com.wico.ui.threads.listeners.PageSavedListener;
 
 import in.uncod.android.bypass.Bypass;
 
 
-public class PageContentViewFragment extends ActivityFabOverriderFragment {
+public class PageViewFragment extends ActivityFabOverriderFragment {
 
     private static final String WICO_PAGE_ID = "param1";
 
@@ -31,11 +33,31 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
 
     private TextView pageContent;
     private EditText editPageContent;
+    private FloatingActionButton fab;
+
+   private PageSavedListener savedListener = new PageSavedListener(){
+        @Override
+        public void onPageSaved(){
+            pageUpdated();
+        }
+    };
+    private Thread.UncaughtExceptionHandler notSavedListener = new Thread.UncaughtExceptionHandler() {
+        @Override
+        public void uncaughtException(Thread thread, Throwable e) {
+            unableToUpdatePage();
+        }
+    };
 
     private View.OnClickListener fabCallBack = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             enableEdit();
+        }
+    };
+    private View.OnClickListener fabEditingCallBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            saveEdit();
         }
     };
 
@@ -53,15 +75,15 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
     };
 
 
-    public static PageContentViewFragment newInstance(String wicoPageId) {
-        PageContentViewFragment fragment = new PageContentViewFragment();
+    public static PageViewFragment newInstance(String wicoPageId) {
+        PageViewFragment fragment = new PageViewFragment();
         Bundle args = new Bundle();
         args.putString(WICO_PAGE_ID, wicoPageId);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public PageContentViewFragment() {
+    public PageViewFragment() {
         // Required empty public constructor
     }
 
@@ -123,16 +145,75 @@ public class PageContentViewFragment extends ActivityFabOverriderFragment {
     }
 
     private void enableEdit(){
-        //pageContent.setText("basudbsadkaslkasd");
-        pageContent.setVisibility(View.GONE);
+        pageContent.setVisibility(View.INVISIBLE);
+        editPageContent.setText(page.getContent());
         editPageContent.setVisibility(View.VISIBLE);
+        overrideFabToEditing();
+    }
+
+    private void saveEdit(){
+        //TODO: fire dialog that confirms changes
+        lockUi();
+        page.updateContent(editPageContent.getText().toString());
+        WicoPageSaver thread = new WicoPageSaver(page,savedListener);
+        thread.setUncaughtExceptionHandler(notSavedListener);
+        thread.start();
+    }
+
+    //callback
+    private void pageUpdated(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                finishEdit();
+            }
+        });
+    }
+
+    private void finishEdit(){
+        loadMarkDownText();
+        unlockUi();
+        overrideFab(fab);
+        pageContent.setVisibility(View.VISIBLE);
+        editPageContent.setVisibility(View.INVISIBLE);
+
+    }
+
+    //exception callback
+    private void unableToUpdatePage(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                unlockUi();
+                Toast.makeText(getActivity(), "An error ocurred while updating the page", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+    private void lockUi(){
+        editPageContent.setEnabled(false);
+        fab.setEnabled(false);
+    }
+
+    private void unlockUi(){
+        editPageContent.setEnabled(true);
+        fab.setEnabled(true);
     }
 
     @Override
     public void overrideFab(FloatingActionButton fab){
+        this.fab = fab;
         fab.setOnClickListener(fabCallBack);
         Drawable editIcon = getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp);
         fab.setImageDrawable(editIcon);
+    }
+
+    private void overrideFabToEditing(){
+        Drawable editIcon = getResources().getDrawable(R.drawable.ic_done_white_24dp);
+        fab.setImageDrawable(editIcon);
+        fab.setOnClickListener(fabEditingCallBack);
     }
 
 
