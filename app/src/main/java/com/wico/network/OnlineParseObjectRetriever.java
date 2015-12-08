@@ -1,4 +1,4 @@
-package com.wico.network.online;
+package com.wico.network;
 
 import com.parse.ParseException;
 import com.parse.ParseQuery;

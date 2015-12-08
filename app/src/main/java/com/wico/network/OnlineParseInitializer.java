@@ -1,4 +1,4 @@
-package com.wico.network.online;
+package com.wico.network;
 
 import android.content.Context;
 

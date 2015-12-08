@@ -7,14 +7,16 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.wico.R;
 import com.wico.network.ParseConnector;
-import com.wico.network.offline.DaggerParseOfflineComponent;
-import com.wico.network.offline.ParseOfflineComponent;
+
 
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import network.DaggerParseOfflineComponent;
+import network.ParseOfflineComponent;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -23,7 +25,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class ActivityPageTest{
+public class WicoPageActivityTest {
 
     @Rule
     public ActivityTestRule<PageActivity> mActivityRule =

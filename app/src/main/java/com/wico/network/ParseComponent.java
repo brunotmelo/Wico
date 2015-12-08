@@ -1,4 +1,4 @@
-package com.wico.network.online;
+package com.wico.network;
 
 import com.wico.network.interfaces.ParseInitializer;
 import com.wico.network.interfaces.ParseObjectRetriever;

@@ -1,4 +1,4 @@
-package com.wico.network.offline;
+package network;
 
 
 import com.wico.network.interfaces.ParseInitializer;

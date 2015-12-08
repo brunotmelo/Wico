@@ -1,4 +1,4 @@
-package com.wico.network.offline;
+package network;
 
 import com.wico.datatypes.Answer;
 import com.wico.datatypes.Question;

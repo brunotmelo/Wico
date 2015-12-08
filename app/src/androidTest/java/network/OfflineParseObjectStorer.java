@@ -1,4 +1,4 @@
-package com.wico.network.offline;
+package network;
 
 import com.parse.ParseObject;
 import com.wico.network.interfaces.ParseObjectStorer;

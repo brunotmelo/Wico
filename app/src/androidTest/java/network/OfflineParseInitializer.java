@@ -1,4 +1,4 @@
-package com.wico.network.offline;
+package network;
 
 import android.content.Context;
 

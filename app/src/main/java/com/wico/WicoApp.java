@@ -3,8 +3,8 @@ package com.wico;
 import android.app.Application;
 
 import com.wico.network.ParseConnector;
-import com.wico.network.online.DaggerParseComponent;
-import com.wico.network.online.ParseComponent;
+import com.wico.network.DaggerParseComponent;
+import com.wico.network.ParseComponent;
 
 public class WicoApp extends Application{
 
