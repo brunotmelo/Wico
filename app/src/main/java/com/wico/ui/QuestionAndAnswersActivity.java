@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.EditText;
@@ -12,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
 import com.wico.R;
 import com.wico.datatypes.Answer;
 import com.wico.network.ParseConnector;
@@ -27,7 +27,6 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
     private ListAdapter answersAdapter;
     private FloatingActionButton sendAnswerButton;
     private EditText answerInputText;
-
     private String questionId;
 
     private AnswerSavedListener savedListener = new AnswerSavedListener(){
@@ -86,10 +85,15 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
     private void saveAnswer(){
         lockInputUi();
         String answerText = answerInputText.getText().toString();
-        Answer answer = new Answer.Builder().content(answerText).parentQuestionId(questionId).build();
+        Answer answer = new Answer.Builder().content(answerText).parentQuestionId(questionId).author(currentAuthor()).build();
         AnswerSaver saverThread = new AnswerSaver(answer, savedListener);
         saverThread.setUncaughtExceptionHandler(notSavedListener);
         saverThread.start();
+    }
+
+    private String currentAuthor(){
+        String author = ParseUser.getCurrentUser().getUsername();
+        return author;
     }
 
     //Callback
@@ -147,8 +151,10 @@ public class QuestionAndAnswersActivity extends AppCompatActivity {
     private void setQuestionContents() {
         TextView content = (TextView)findViewById(R.id.qa_questionContent);
         TextView title = (TextView)findViewById(R.id.qa_questionTitle);
+        TextView author = (TextView)findViewById(R.id.qa_author);
         title.setText(getIntent().getStringExtra("title"));
         content.setText(getIntent().getStringExtra("content"));
+        author.setText(getIntent().getStringExtra("author"));
     }
 
     private void attachAnswerList(ArrayList<Answer> answerList) {

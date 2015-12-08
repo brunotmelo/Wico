@@ -9,6 +9,7 @@ public final class Question extends ParseObject{
     public static final class Builder{
         private String title;
         private String content;
+        private String author;
         private String parentId;
 
         public Builder title(String title){
@@ -26,6 +27,11 @@ public final class Question extends ParseObject{
             return this;
         }
 
+        public Builder author(String author){
+            this.author = author;
+            return this;
+        }
+
         public Question build() {
             return new Question(this);
         }
@@ -40,8 +46,10 @@ public final class Question extends ParseObject{
     private Question(Builder builder){
         put("title", builder.title);
         put("content",builder.content);
+        put("author", builder.author);
         put("parentId",builder.parentId);
         put("numOfAnswers",0);
+        
     }
 
     public void addAnswer(){
@@ -60,8 +68,13 @@ public final class Question extends ParseObject{
         return getString("title");
     }
 
+
     public String getContent(){
         return getString("content");
+    }
+
+    public String getAuthor(){
+        return getString("author");
     }
 
     public int getNumberOfAnswers(){

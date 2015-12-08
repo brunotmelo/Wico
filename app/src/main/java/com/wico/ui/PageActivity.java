@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.parse.ParseUser;
 import com.wico.R;
 import com.wico.network.ParseConnector;
 import com.wico.ui.fragments.ActivityFabOverriderFragment;
@@ -101,11 +102,16 @@ public class PageActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            logOut();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void logOut(){
+        ParseUser.logOut();
+        Intent intent = new Intent(getApplicationContext(), LoginSignupActivity.class);
+        startActivity(intent);
+    }
 }
