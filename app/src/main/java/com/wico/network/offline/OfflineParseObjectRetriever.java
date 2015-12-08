@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class OfflineParseObjectRetriever implements ParseObjectRetriever {
     @Override
     public WicoPage getPage(String id) {
-        return null;
+        return new WicoPage.Builder().title("testing page").content("markdown").path("/").build();
     }
 
     @Override
