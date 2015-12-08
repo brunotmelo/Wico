@@ -3,6 +3,8 @@ package com.wico.network;
 import android.content.Context;
 
 import com.parse.Parse;
+import com.parse.ParseUser;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;

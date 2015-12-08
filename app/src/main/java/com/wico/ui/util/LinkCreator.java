@@ -59,9 +59,6 @@ public class LinkCreator {
         };
 
         spannableInputString.setSpan(clickableSpan, inputString.indexOf("[") + indexErrorMargin, inputString.indexOf("]"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        //getting the wrong textView
-        //View view = View.inflate(context, R.layout.fragment_page_view, null);
-        //TextView textView = (TextView) view.findViewById(R.id.pv_markdownText);
         textView.setText(spannableInputString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         textView.setHighlightColor(Color.GREEN);

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.ui.threads.QuestionSaver;
@@ -60,7 +61,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
     private void getQuestionAndSave() {
         String title = getUiTitle();
         String content = getUiContent();
-        Question question = new Question.Builder().title(title).content(content).parentPath(parentPath).build();
+        Question question = new Question.Builder().title(title).content(content).parentPath(parentPath).author(ParseUser.getCurrentUser().getUsername()).build();
         saveQuestion(question);
         lockUi();
     }

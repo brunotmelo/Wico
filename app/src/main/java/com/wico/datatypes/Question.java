@@ -10,6 +10,7 @@ public final class Question extends ParseObject{
         private String title;
         private String content;
         private String parentPath;
+        private String author;
 
         public Builder title(String title){
             this.title = title;
@@ -23,6 +24,11 @@ public final class Question extends ParseObject{
 
         public Builder parentPath(String parentPath){
             this.parentPath = parentPath;
+            return this;
+        }
+
+        public Builder author(String author){
+            this.author = author;
             return this;
         }
 
@@ -42,6 +48,7 @@ public final class Question extends ParseObject{
         put("content",builder.content);
         put("parentPath",builder.parentPath);
         put("numOfAnswers",0);
+        put("author", builder.author);
     }
 
     public void addAnswer(){
@@ -60,8 +67,13 @@ public final class Question extends ParseObject{
         return getString("title");
     }
 
+
     public String getContent(){
         return getString("content");
+    }
+
+    public String getAuthor(){
+        return getString("author");
     }
 
     public int getNumberOfAnswers(){
