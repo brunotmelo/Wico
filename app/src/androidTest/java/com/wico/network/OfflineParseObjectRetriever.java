@@ -1,4 +1,4 @@
-package network;
+package com.wico.network;
 
 import com.wico.datatypes.Answer;
 import com.wico.datatypes.Question;
@@ -8,6 +8,8 @@ import com.wico.network.interfaces.ParseObjectRetriever;
 import java.util.ArrayList;
 
 public class OfflineParseObjectRetriever implements ParseObjectRetriever {
+
+
     @Override
     public WicoPage getPage(String id) {
         return new WicoPage.Builder().title("testing page").content("markdown").path("/").build();

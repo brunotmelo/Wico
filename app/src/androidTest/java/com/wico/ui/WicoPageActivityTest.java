@@ -6,17 +6,13 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.wico.R;
-import com.wico.network.ParseConnector;
-
-
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import network.DaggerParseOfflineComponent;
-import network.ParseOfflineComponent;
+import com.wico.util.DependencyInjector;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -33,7 +29,8 @@ public class WicoPageActivityTest {
 
     @Before
     public void setUp(){
-        injectOfflineDependencies();
+        DependencyInjector injector = new DependencyInjector();
+        injector.inject();
     }
 
     @Test
@@ -41,24 +38,6 @@ public class WicoPageActivityTest {
         Intent intent = new Intent();
         mActivityRule.launchActivity(intent);
         onView(withId(R.id.pv_markdownText)).check(matches(withText("markdown")));
-    }
-
-    @Test
-    public void testConnector(){
-        boolean connected;
-        if(ParseConnector.initializer == null){
-            connected = false;
-        }else{
-            connected = true;
-        }
-        assertTrue(connected);
-    }
-
-    private void injectOfflineDependencies(){
-        ParseOfflineComponent offlineComponent = DaggerParseOfflineComponent.builder().build();
-        ParseConnector.initializer = offlineComponent.provideInitializer();
-        ParseConnector.retriever = offlineComponent.provideParseRetriever();
-        ParseConnector.storer = offlineComponent.provideParseStorer();
     }
 
 }

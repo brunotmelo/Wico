@@ -1,4 +1,4 @@
-package network;
+package com.wico.network;
 
 
 import com.wico.network.interfaces.ParseInitializer;
