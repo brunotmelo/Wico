@@ -11,19 +11,12 @@
     card_view:cardUseCompatPadding = "true"
     card_view:cardPreventCornerOverlap = "true"
     >
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/childrenPagesCellTitleText" />
 
-    </LinearLayout>
 </android.support.v7.widget.CardView>
 
 
