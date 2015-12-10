@@ -2,7 +2,6 @@ package com.wico.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -14,9 +13,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import com.wico.network.OfflineParseObjectStorer;
-import com.wico.util.DependencyInjector;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -39,9 +35,7 @@ public class CreateQuestionTest {
 
     @Before
     public void setUp(){
-        DependencyInjector injector = new DependencyInjector();
-        injector.inject();
-        Espresso.registerIdlingResource(new WebViewIdlingResource(getActivity().findViewById(R.id.webview)));
+        //Espresso.registerIdlingResource(new WebViewIdlingResource(getActivity().findViewById(R.id.webview)));
         saveQuestion();
     }
 
@@ -81,7 +75,8 @@ public class CreateQuestionTest {
 
 
     private Question getSavedQuestion(){
-        OfflineParseObjectStorer storer= (OfflineParseObjectStorer)ParseConnector.storer;
-        return (Question)storer.getStoredObject();
+        //OfflineParseObjectStorer storer= (OfflineParseObjectStorer)ParseConnector.storer;
+        //return (Question)storer.getStoredObject();
+        return null;
     }
 }

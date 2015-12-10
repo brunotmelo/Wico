@@ -3,6 +3,7 @@ package com.wico.network;
 import android.content.Context;
 
 import com.parse.ParseObject;
+import com.wico.WicoApp;
 import com.wico.datatypes.Answer;
 import com.wico.datatypes.Question;
 import com.wico.datatypes.WicoPage;
@@ -19,19 +20,25 @@ public class ParseConnector {
     // The following fields cannot be private.
     // Dagger does not support private fields injection
     @Inject
-    public static ParseInitializer initializer;
+    ParseInitializer initializer;
     @Inject
-    public static ParseObjectRetriever retriever;
+    ParseObjectRetriever retriever;
     @Inject
-    public static ParseObjectStorer storer;
+    ParseObjectStorer storer;
 
     private static boolean initialized = false;
+
+    public ParseConnector(){
+        WicoApp app = (WicoApp)WicoApp.getAppContext();
+        app.getComponent().inject(this);
+    }
 
     /**Initializes connection to parse.
      * This method must be run in the first activity
      * of the application.
      */
     public void initialize(Context context){
+
         if(!initialized){
             initializer.initialize(context);
             initialized = true;

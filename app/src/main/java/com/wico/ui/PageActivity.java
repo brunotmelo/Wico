@@ -18,8 +18,6 @@ import com.wico.ui.fragments.pager_adapters.SectionsPagerAdapter;
 
 public class PageActivity extends AppCompatActivity {
 
-    public boolean isTesting = false;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
