@@ -106,7 +106,7 @@ public class ChildrenPagesFragment extends ActivityFabOverriderFragment implemen
     }
     public void loadWicoPages() {
         ParseConnector parseConnector = new ParseConnector();
-        ArrayList<WicoPage> childrenList = parseConnector.getWicoPages(wicoPageId);
+        ArrayList<WicoPage> childrenList = parseConnector.getChildrenPages(parentPageId);
         childrenAdapter = new ChildrenListAdapter(getActivity(), android.R.id.text1, childrenList);
         mListView.setAdapter(childrenAdapter);
     }

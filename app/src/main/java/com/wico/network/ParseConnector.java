@@ -116,7 +116,7 @@ public class ParseConnector {
         return page;
     }
 
-    public ArrayList<WicoPage> getChildrenWicoPages(String parentId) {
+    public ArrayList<WicoPage> getChildrenPages(String parentId) {
         checkConnection();
         ParseQuery<WicoPage> query = createChildrenPagesQuery(parentId);
         ArrayList<WicoPage> wicoPages = new ArrayList<>();
