@@ -3,9 +3,14 @@
     android:layout_height="match_parent"
     tools:context="com.wico.ui.fragments.ChildrenPagesFragment">
 
-    <TextView
-        android:padding="16dp"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/pcv_unimplemented" />
+
+    <ListView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fcp_listView"
+        android:layout_gravity="left|top" />
 
 </FrameLayout>
+
+

@@ -22,7 +22,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0: return PageContentViewFragment.newInstance(pagePath);
-            case 1: return ChildrenPagesFragment.newInstance();
+            case 1: return ChildrenPagesFragment.newInstance(pagePath);
             case 2: return QuestionListFragment.newInstance(pagePath);
             default: return null;
         }

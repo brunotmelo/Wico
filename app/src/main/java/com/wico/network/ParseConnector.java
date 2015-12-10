@@ -97,6 +97,17 @@ public class ParseConnector {
         return question;
     }
 
+    private WicoPage getWicoPageId(String wicoPageId){
+        ParseQuery<WicoPage> query = createChildrenPagesQuery(wicoPageId);
+        WicoPage page = null;
+        try {
+            page = query.getFirst();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return page;
+    }
+
     public WicoPage loadPage(String path){
         checkConnection();
         ParseQuery<WicoPage> query = createPageQuery(path);
@@ -107,6 +118,21 @@ public class ParseConnector {
             throw new WicoParseException();
         }
         return page;
+    }
+
+    public ArrayList<WicoPage> getWicoPages(String path) {
+        checkConnection();
+        ParseQuery<WicoPage> query = createChildrenPagesQuery(path);
+        ArrayList<WicoPage> wicoPages = new ArrayList<>();
+        WicoPage page = new WicoPage.Builder().title("computer science").content("irru").path("aslksadlas").build();
+        wicoPages.add(page);
+        return wicoPages;
+    }
+
+    private ParseQuery<WicoPage> createChildrenPagesQuery(String wicoPageId) {
+        ParseQuery<WicoPage> query = ParseQuery.getQuery(WicoPage.class);
+        query.whereEqualTo("parentId",wicoPageId);
+        return query;
     }
 
     public ArrayList<Question> getQuestions(String parentPagePath) {
