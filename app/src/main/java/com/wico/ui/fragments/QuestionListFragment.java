@@ -24,6 +24,7 @@ import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
 import com.wico.ui.CreateQuestionActivity;
+import com.wico.ui.EditQuestionActivity;
 import com.wico.ui.QuestionAndAnswersActivity;
 import com.wico.ui.adapters.QuestionListAdapter;
 import com.wico.ui.threads.NetworkChecker;
@@ -204,6 +205,7 @@ public class QuestionListFragment extends ActivityFabOverriderFragment implement
     private void editQuestion(Question question) {
         String editableTitle = question.getTitle();
         String editableContent = question.getContent();
-        
+        Intent intent = new Intent(getContext(), EditQuestionActivity.class);
+        intent.putExtra()
     }
 }
