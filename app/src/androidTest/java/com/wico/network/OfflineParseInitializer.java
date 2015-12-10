@@ -14,6 +14,7 @@ public class OfflineParseInitializer implements ParseInitializer {
     public void initialize(Context context) {
         Parse.enableLocalDatastore(context);
         registerParseSubclasses();
+        Parse.initialize(context, "rvro91QbTePbPJKwAfB5TcMjoXzVH8ewSawqk7uk", "8W1XCtK31EAh9EXY5Fp7kbePKkT7eDO92DdxmHEr");
     }
 
     private void registerParseSubclasses(){

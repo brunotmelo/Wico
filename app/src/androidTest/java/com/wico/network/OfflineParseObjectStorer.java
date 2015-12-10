@@ -1,20 +1,20 @@
 package com.wico.network;
 
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.wico.exceptions.WicoParseException;
 import com.wico.network.interfaces.ParseObjectStorer;
 
 public class OfflineParseObjectStorer implements ParseObjectStorer {
 
-    private ParseObject storedObject;
-
 
     @Override
     public void store(ParseObject object) {
-        storedObject = object;
-        System.out.println("object saved");
+        try {
+            object.pin();
+        } catch (ParseException e) {
+            throw new WicoParseException();
+        }
     }
 
-    public ParseObject getStoredObject(){
-        return storedObject;
-    }
 }

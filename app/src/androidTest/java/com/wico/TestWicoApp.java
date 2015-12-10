@@ -11,7 +11,6 @@ public class TestWicoApp extends WicoApp{
 
     @Override public void onCreate() {
         super.onCreate();
-        System.out.println("hey");
         component = DaggerParseOfflineComponent.builder()
                 .parseConnectorOfflineModule(new ParseConnectorOfflineModule())
                 .build();

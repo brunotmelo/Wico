@@ -14,6 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -35,7 +37,6 @@ public class CreateQuestionTest {
 
     @Before
     public void setUp(){
-        //Espresso.registerIdlingResource(new WebViewIdlingResource(getActivity().findViewById(R.id.webview)));
         saveQuestion();
     }
 
@@ -65,9 +66,9 @@ public class CreateQuestionTest {
 
     private boolean compareQuestionFields(Question question){
         boolean equal = true;
-        if(question.getContent() != TEST_QUESTION_CONTENT){
+        if(!question.getContent().equals(TEST_QUESTION_CONTENT)){
             equal = false;
-        }if(question.getTitle() != TEST_QUESTION_TITLE){
+        }if(!question.getTitle().equals(TEST_QUESTION_TITLE)){
             equal = false;
         }
         return equal;
@@ -75,8 +76,9 @@ public class CreateQuestionTest {
 
 
     private Question getSavedQuestion(){
-        //OfflineParseObjectStorer storer= (OfflineParseObjectStorer)ParseConnector.storer;
-        //return (Question)storer.getStoredObject();
-        return null;
+        ParseConnector connector = new ParseConnector();
+        ArrayList<Question> questions = connector.getQuestions(TEST_PAGE_ID);
+        return questions.get(0);
+
     }
 }
