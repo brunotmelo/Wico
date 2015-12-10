@@ -5,14 +5,21 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
@@ -81,6 +88,7 @@ public class QuestionListFragment extends ActivityFabOverriderFragment implement
         connectText = (TextView) view.findViewById(R.id.connectmessage);
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setOnItemClickListener(this);
+        registerForContextMenu(mListView);
     }
 
     @Override
@@ -143,9 +151,59 @@ public class QuestionListFragment extends ActivityFabOverriderFragment implement
     }
 
     @Override
-    public void overrideFab(FloatingActionButton fab){
+    public void overrideFab(FloatingActionButton fab) {
         fab.setOnClickListener(fabCallBack);
         Drawable editIcon = getResources().getDrawable(R.drawable.ic_add);
         fab.setImageDrawable(editIcon);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        if (view.getId() == android.R.id.list) {
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.menu_list, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+        Question question = (Question)questionAdapter.getItem(position);
+        switch (item.getItemId()) {
+            case R.id.delete:
+                if(userCanDelete(question)) {
+                    try {
+                        question.delete();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    loadQuestions();
+                    return true;
+                }
+                else{
+                    Toast.makeText(getContext(), "You may not delete this question", Toast.LENGTH_LONG).show();
+                }
+            case R.id.edit:
+               editQuestion(question);
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private boolean userCanDelete(Question question){
+        if(question.getAuthor().equals(ParseUser.getCurrentUser().getUsername())){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private void editQuestion(Question question) {
+        String editableTitle = question.getTitle();
+        String editableContent = question.getContent();
+        
     }
 }
