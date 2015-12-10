@@ -2,6 +2,7 @@ package com.wico.datatypes;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 @ParseClassName("Question")
 public final class Question extends ParseObject{
@@ -67,7 +68,6 @@ public final class Question extends ParseObject{
     public String getTitle(){
         return getString("title");
     }
-
 
     public String getContent(){
         return getString("content");
