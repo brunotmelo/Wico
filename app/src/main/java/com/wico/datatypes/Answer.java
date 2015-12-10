@@ -9,6 +9,7 @@ public class Answer extends ParseObject {
     public static final class Builder{
         private String content;
         private String parentQuestionId;
+        private String author;
 
         public Builder content(String content){
             this.content = content;
@@ -17,6 +18,11 @@ public class Answer extends ParseObject {
 
         public Builder parentQuestionId(String parentQuestionId){
             this.parentQuestionId = parentQuestionId;
+            return this;
+        }
+
+        public Builder author(String author){
+            this.author = author;
             return this;
         }
 
@@ -32,6 +38,7 @@ public class Answer extends ParseObject {
     private Answer(Builder builder){
         put("content",builder.content);
         put("parentQuestionId",builder.parentQuestionId);
+        put("author",builder.author);
     }
 
     public String getContent() {
@@ -43,9 +50,7 @@ public class Answer extends ParseObject {
     }
 
     public String getAuthor(){
-        //TODO: Next iteration will have support for users
-        //this is just a placeholder
-        return "Wico";
+        return getString("author");
     }
 
 }

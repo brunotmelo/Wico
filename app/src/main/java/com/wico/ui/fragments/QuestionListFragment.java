@@ -2,28 +2,45 @@ package com.wico.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
+import com.wico.ui.CreateQuestionActivity;
 import com.wico.ui.QuestionAndAnswersActivity;
 import com.wico.ui.adapters.QuestionListAdapter;
 import com.wico.ui.threads.NetworkChecker;
 
 import java.util.ArrayList;
 
-public class QuestionListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class QuestionListFragment extends ActivityFabOverriderFragment implements AbsListView.OnItemClickListener {
 
     private boolean loading = false;
+    private View.OnClickListener fabCallBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),CreateQuestionActivity.class);
+                intent.putExtra("parentPageId",wicoPageId);
+                startActivity(intent);
+        }
+    };
 
     /**
      * The fragment's ListView/GridView.
@@ -71,6 +88,7 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         connectText = (TextView) view.findViewById(R.id.connectmessage);
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         mListView.setOnItemClickListener(this);
+        registerForContextMenu(mListView);
     }
 
     @Override
@@ -80,7 +98,6 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
             waitInternetAndLoadContent();
             loading = true;
         }
-
     }
 
     public void waitInternetAndLoadContent() {
@@ -133,4 +150,59 @@ public class QuestionListFragment extends Fragment implements AbsListView.OnItem
         startActivity(intent);
     }
 
+    @Override
+    public void overrideFab(FloatingActionButton fab) {
+        fab.setOnClickListener(fabCallBack);
+        Drawable editIcon = getResources().getDrawable(R.drawable.ic_add);
+        fab.setImageDrawable(editIcon);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        if (view.getId() == android.R.id.list) {
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.menu_list, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+        Question question = (Question)questionAdapter.getItem(position);
+        switch (item.getItemId()) {
+            case R.id.delete:
+                if(userCanDelete(question)) {
+                    try {
+                        question.delete();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    loadQuestions();
+                    return true;
+                }
+                else{
+                    Toast.makeText(getContext(), "You may not delete this question", Toast.LENGTH_LONG).show();
+                }
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private boolean userCanDelete(Question question){
+        if(question.getAuthor().equals(ParseUser.getCurrentUser().getUsername())){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+/*    private void editQuestion(Question question) {
+        String editableTitle = question.getTitle();
+        String editableContent = question.getContent();
+        Intent intent = new Intent(getContext(), EditQuestionActivity.class);
+        intent.putExtra()
+    }*/
 }

@@ -5,6 +5,7 @@ import com.wico.network.ParseConnector;
 import com.wico.ui.CreateQuestionActivity;
 
 public class QuestionSaver extends Thread{
+
     private CreateQuestionActivity savingQuestionActivity;
     private Question question;
 
@@ -18,5 +19,4 @@ public class QuestionSaver extends Thread{
         parse.store(question);
         savingQuestionActivity.onQuestionSaved();
     }
-
 }

@@ -1,7 +1,6 @@
 package com.wico.ui;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -12,38 +11,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.parse.ParseUser;
 import com.wico.R;
 import com.wico.network.ParseConnector;
-import com.wico.ui.fragments.pager_adapters.SectionsPagerAdapter;
+import com.wico.ui.fragments.ActivityFabOverriderFragment;
+import com.wico.ui.adapters.SectionsPagerAdapter;
 
 public class PageActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton fab;
-    private String pagePath = "/Ball State University";
+    public static final String MASTER_PAGE_ID = "iEmjO2Xvs2";
+    private String pageId;
 
-    private View.OnClickListener openCreatePageListener = new View.OnClickListener() {
+    private View.OnClickListener defaultFabCallBack = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(getApplicationContext(),CreatePageActivity.class);
-            intent.putExtra("parentPath",pagePath);
-            startActivity(intent);
-        }
-    };
-    private View.OnClickListener openCreateQuestionListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getApplicationContext(),CreateQuestionActivity.class);
-            intent.putExtra("parentPath",pagePath);
-            startActivity(intent);
-        }
-    };
-    private View.OnClickListener openEditPageListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            //loaded when the page tab is selected
-            //needed to remove the other listeners
+            overrideFabForCurrentTab(0);
+            fab.performClick();
         }
     };
 
@@ -66,23 +52,23 @@ public class PageActivity extends AppCompatActivity {
 
     private void getPagePathFromIntent() {
         Intent intent = getIntent();
-        pagePath = intent.getStringExtra("pagePath");
-        if (pagePath == null){
-            //opens root page
-            pagePath = "/Ball State University";
+        pageId = intent.getStringExtra("pageId");
+        if (pageId == null){
+            pageId = MASTER_PAGE_ID;
         }
     }
 
     private void setToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),pagePath);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), pageId);
     }
 
     private void startUiVariables(){
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         fab = (FloatingActionButton) findViewById(R.id.page_fab);
+        fab.setOnClickListener(defaultFabCallBack);
     }
 
     private void setTabLayout(){
@@ -97,38 +83,14 @@ public class PageActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
                 int numTab = tab.getPosition();
-                overrideFloatingActionButton(numTab);
+                overrideFabForCurrentTab(numTab);
             }
         };
     }
 
-    private void overrideFloatingActionButton(int numTab){
-        switch(numTab){
-            case 0: fabEditsPage();
-                    break;
-            case 1: fabAddsPage();
-                    break;
-            case 2: fabAddsQuestion();
-                    break;
-        }
-    }
-
-    private void fabEditsPage(){
-        fab.setOnClickListener(openEditPageListener);
-        Drawable editIcon = getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp);
-        fab.setImageDrawable(editIcon);
-    }
-
-    private void fabAddsPage() {
-        fab.setOnClickListener(openCreatePageListener);
-        Drawable addIcon = getResources().getDrawable(R.drawable.ic_add);
-        fab.setImageDrawable(addIcon);
-    }
-
-    private void fabAddsQuestion(){
-        fab.setOnClickListener(openCreateQuestionListener);
-        Drawable addIcon = getResources().getDrawable(R.drawable.ic_send_white_24dp);
-        fab.setImageDrawable(addIcon);
+    private void overrideFabForCurrentTab(int numTab){
+        ActivityFabOverriderFragment fragment = mSectionsPagerAdapter.getRegisteredFragment(numTab);
+        fragment.overrideFab(fab);
     }
 
     @Override
@@ -140,11 +102,16 @@ public class PageActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            logOut();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void logOut(){
+        ParseUser.logOut();
+        Intent intent = new Intent(getApplicationContext(), LoginSignupActivity.class);
+        startActivity(intent);
+    }
 }

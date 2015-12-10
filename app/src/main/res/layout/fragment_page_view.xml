@@ -1,11 +1,31 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.wico.ui.fragments.PageContentViewFragment">
+    android:layout_height="match_parent" tools:context=".ui.fragments.PageViewFragment"
+    android:id="@+id/pageViewFragment"
+    android:paddingBottom="60dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:clipToPadding="false"
+    >
 
     <TextView
-        android:padding="10dp"
+
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:text="@string/pv_loading_page"
         android:id="@+id/pv_markdownText" />
+
+    <EditText
+        android:id="@+id/pv_editText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:gravity="start|top"
+        android:layout_gravity="start|top"
+        android:visibility="invisible"
+        android:singleLine="false"
+        android:background="@android:color/transparent"
+        android:textAlignment="gravity" />
+
 
 </FrameLayout>

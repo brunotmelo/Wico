@@ -19,7 +19,7 @@ public class CreatePageActivity extends AppCompatActivity {
     private EditText titleInput;
     private EditText contentInput;
 
-    private String parentPath;
+    private String parentId;
 
     private View.OnClickListener savePageListener = new View.OnClickListener() {
         @Override
@@ -44,7 +44,7 @@ public class CreatePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_page);
-        parentPath = getIntent().getStringExtra("parentPath");
+        parentId = getIntent().getStringExtra("parentId");
         setToolbar();
         startUiElements();
     }
@@ -73,8 +73,7 @@ public class CreatePageActivity extends AppCompatActivity {
         lockUi();
         String title = getUiTitle();
         String content = getUiContent();
-        String childrenPagePath = parentPath + "/" + title;
-        WicoPage page = new WicoPage.Builder().title(title).content(content).path(childrenPagePath).build();
+        WicoPage page = new WicoPage.Builder().title(title).content(content).parentId(parentId).build();
         savePage(page);
     }
 

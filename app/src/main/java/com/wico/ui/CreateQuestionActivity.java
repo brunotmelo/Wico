@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
 import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.ui.threads.QuestionSaver;
@@ -20,7 +21,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
     private EditText title;
     private EditText content;
 
-    private String parentPath;
+    private String parentPageId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_question);
         setToolbar();
         startUiElements();
-        parentPath = getIntent().getStringExtra("parentPath");
+        parentPageId = getIntent().getStringExtra("parentPageId");
     }
 
     private void setToolbar() {
@@ -60,7 +61,13 @@ public class CreateQuestionActivity extends AppCompatActivity {
     private void getQuestionAndSave() {
         String title = getUiTitle();
         String content = getUiContent();
-        Question question = new Question.Builder().title(title).content(content).parentPath(parentPath).build();
+        String authorName = ParseUser.getCurrentUser().getUsername();
+        Question question = new Question.Builder()
+                .title(title)
+                .content(content)
+                .parentId(parentPageId)
+                .author(authorName)
+                .build();
         saveQuestion(question);
         lockUi();
     }

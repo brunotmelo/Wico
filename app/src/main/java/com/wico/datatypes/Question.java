@@ -2,6 +2,7 @@ package com.wico.datatypes;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 @ParseClassName("Question")
 public final class Question extends ParseObject{
@@ -9,7 +10,8 @@ public final class Question extends ParseObject{
     public static final class Builder{
         private String title;
         private String content;
-        private String parentPath;
+        private String author;
+        private String parentId;
 
         public Builder title(String title){
             this.title = title;
@@ -21,8 +23,13 @@ public final class Question extends ParseObject{
             return this;
         }
 
-        public Builder parentPath(String parentPath){
-            this.parentPath = parentPath;
+        public Builder parentId(String parentId){
+            this.parentId = parentId;
+            return this;
+        }
+
+        public Builder author(String author){
+            this.author = author;
             return this;
         }
 
@@ -40,8 +47,10 @@ public final class Question extends ParseObject{
     private Question(Builder builder){
         put("title", builder.title);
         put("content",builder.content);
-        put("parentPath",builder.parentPath);
+        put("author", builder.author);
+        put("parentId",builder.parentId);
         put("numOfAnswers",0);
+        
     }
 
     public void addAnswer(){
@@ -62,6 +71,10 @@ public final class Question extends ParseObject{
 
     public String getContent(){
         return getString("content");
+    }
+
+    public String getAuthor(){
+        return getString("author");
     }
 
     public int getNumberOfAnswers(){
