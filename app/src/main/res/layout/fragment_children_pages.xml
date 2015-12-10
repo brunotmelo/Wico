@@ -3,10 +3,14 @@
     android:layout_height="match_parent"
     tools:context="com.wico.ui.fragments.ChildrenPagesFragment">
 
+
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cpf_listView"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fcp_listView"
         android:layout_gravity="left|top" />
 
 </FrameLayout>
+
+

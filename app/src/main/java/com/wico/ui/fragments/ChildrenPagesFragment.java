@@ -1,6 +1,7 @@
 package com.wico.ui.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -8,16 +9,28 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 
 import com.wico.R;
+import com.wico.datatypes.WicoPage;
+import com.wico.network.ParseConnector;
 import com.wico.ui.CreatePageActivity;
+import com.wico.ui.PageActivity;
+import com.wico.ui.adapters.ChildrenListAdapter;
+import com.wico.ui.threads.NetworkChecker;
 
-public class ChildrenPagesFragment extends ActivityFabOverriderFragment{
+import java.util.ArrayList;
 
+public class ChildrenPagesFragment extends ActivityFabOverriderFragment implements AbsListView.OnItemClickListener{
 
-
-    private static final String PARENT_PAGE_ID = "param1";
+    private AbsListView mListView;
+    private ListAdapter childrenAdapter;
+    private static final String PARENT_PAGE_ID = "param2";
     private String parentPageId;
+    private boolean loading = false;
+
 
     private View.OnClickListener fabCallBack = new View.OnClickListener() {
         @Override
@@ -50,13 +63,70 @@ public class ChildrenPagesFragment extends ActivityFabOverriderFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_children_pages, container, false);
-        return rootView;
+        View view = inflater.inflate(R.layout.fragment_children_pages, container, false);
+        startUiVariables(view);
+        return view;
+    }
+
+
+    private void startUiVariables(View view){
+        mListView = (AbsListView) view.findViewById(R.id.fcp_listView);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
     public void onResume(){
         super.onResume();
+        if(!loading){
+            waitInternetAndLoadContent();
+            loading = true;
+        }
+    }
+    
+    public void waitInternetAndLoadContent() {
+        NetworkChecker checker = new NetworkChecker(getActivity());
+        checker.setNetworkCheckerListener(new NetworkChecker.NetworkCheckerListener() {
+            @Override
+            public void onConnected() {
+                connectedToInternet();
+            }
+        });
+        checker.start();
+    }
+
+    //callback
+    private void connectedToInternet() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadWicoPages();
+            }
+        });
+        loading = false;
+    }
+    public void loadWicoPages() {
+        ParseConnector parseConnector = new ParseConnector();
+        ArrayList<WicoPage> childrenList = parseConnector.getWicoPages(wicoPageId);
+        childrenAdapter = new ChildrenListAdapter(getActivity(), android.R.id.text1, childrenList);
+        mListView.setAdapter(childrenAdapter);
+    }
+
+    @Override
+    public void onAttach(Context activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), PageActivity.class);
+        WicoPage wicoPage = (WicoPage) childrenAdapter.getItem(position);
+        intent.putExtra("wicoPageId", wicoPage.getObjectId());
+        startActivity(intent);
     }
 
     @Override
@@ -65,5 +135,6 @@ public class ChildrenPagesFragment extends ActivityFabOverriderFragment{
         Drawable editIcon = getResources().getDrawable(R.drawable.ic_note_add_white_24dp);
         fab.setImageDrawable(editIcon);
     }
+
 
 }

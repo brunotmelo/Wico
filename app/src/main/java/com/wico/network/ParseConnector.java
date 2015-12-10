@@ -11,7 +11,6 @@ import com.parse.ParseQuery;
 import com.wico.datatypes.Answer;
 import com.wico.datatypes.WicoPage;
 import com.wico.datatypes.Question;
-import com.wico.exceptions.AlreadyInitializedException;
 import com.wico.exceptions.DisconectedFromParseException;
 import com.wico.exceptions.WicoParseException;
 
@@ -94,9 +93,20 @@ public class ParseConnector {
         return question;
     }
 
-    public WicoPage loadPage(String path){
+    private WicoPage getWicoPageId(String wicoPageId){
+        ParseQuery<WicoPage> query = createChildrenPagesQuery(wicoPageId);
+        WicoPage page = null;
+        try {
+            page = query.getFirst();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return page;
+    }
+
+    public WicoPage loadPage(String id){
         checkConnection();
-        ParseQuery<WicoPage> query = createPageQuery(path);
+        ParseQuery<WicoPage> query = createPageQuery(id);
         WicoPage page;
         try {
             page = query.getFirst();
@@ -104,6 +114,21 @@ public class ParseConnector {
             throw new WicoParseException();
         }
         return page;
+    }
+
+    public ArrayList<WicoPage> getChildrenWicoPages(String parentId) {
+        checkConnection();
+        ParseQuery<WicoPage> query = createChildrenPagesQuery(parentId);
+        ArrayList<WicoPage> wicoPages = new ArrayList<>();
+        WicoPage page = new WicoPage.Builder().title("computer science").content("irru").parentId("aslksadlas").build();
+        wicoPages.add(page);
+        return wicoPages;
+    }
+
+    private ParseQuery<WicoPage> createChildrenPagesQuery(String wicoPageId) {
+        ParseQuery<WicoPage> query = ParseQuery.getQuery(WicoPage.class);
+        query.whereEqualTo("parentId",wicoPageId);
+        return query;
     }
 
     public ArrayList<Question> getQuestions(String parentPageId) {
