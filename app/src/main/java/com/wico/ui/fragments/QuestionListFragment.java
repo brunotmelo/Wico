@@ -147,6 +147,7 @@ public class QuestionListFragment extends ActivityFabOverriderFragment implement
         intent.putExtra("questionId", question.getObjectId());
         intent.putExtra("title",question.getTitle());
         intent.putExtra("content",question.getContent());
+        intent.putExtra("author",question.getAuthor());
         startActivity(intent);
     }
 

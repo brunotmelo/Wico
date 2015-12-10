@@ -15,7 +15,7 @@ public class OfflineParseObjectRetriever implements ParseObjectRetriever {
 
     @Override
     public WicoPage getPage(String id) {
-        return new WicoPage.Builder().title("testing page").content("markdown").path("/").build();
+        return new WicoPage.Builder().title("testing page").content("markdown").parentId("/").build();
     }
 
     @Override
