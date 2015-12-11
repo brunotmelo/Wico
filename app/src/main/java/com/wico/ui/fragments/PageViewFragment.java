@@ -121,7 +121,6 @@ public class PageViewFragment extends ActivityFabOverriderFragment {
     //callBack
     private void pageLoaded(WicoPage page){
         this.page = page;
-        System.out.println(page.getTitle());
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

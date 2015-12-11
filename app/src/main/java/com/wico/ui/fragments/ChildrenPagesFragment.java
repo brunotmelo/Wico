@@ -126,7 +126,7 @@ public class ChildrenPagesFragment extends ActivityFabOverriderFragment implemen
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), PageActivity.class);
         WicoPage wicoPage = (WicoPage) childrenAdapter.getItem(position);
-        intent.putExtra("wicoPageId", wicoPage.getObjectId());
+        intent.putExtra("pageId", wicoPage.getObjectId());
         startActivity(intent);
     }
 

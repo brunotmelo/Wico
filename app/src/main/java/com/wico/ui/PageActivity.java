@@ -55,6 +55,8 @@ public class PageActivity extends AppCompatActivity {
         pageId = intent.getStringExtra("pageId");
         if (pageId == null){
             pageId = MASTER_PAGE_ID;
+        }else{
+
         }
     }
 
@@ -62,6 +64,16 @@ public class PageActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), pageId);
+        if(pageId != MASTER_PAGE_ID){
+            //noinspection ConstantConditions
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     private void startUiVariables(){

@@ -16,7 +16,6 @@ public class PageLoader extends Thread {
 
     @Override
     public void run(){
-        System.out.println("running thread");
         ParseConnector connector = new ParseConnector();
         WicoPage page = connector.loadPage(pageId);
         listener.onPageLoaded(page);
