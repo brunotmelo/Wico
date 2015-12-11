@@ -83,7 +83,7 @@ public class ParseConnector {
         }
     }
 
-    private Question getQuestion(String questionId){
+    public Question getQuestion(String questionId){
         ParseQuery<Question> query = createQuestionQuery(questionId);
         Question question = null;
         try {
@@ -128,7 +128,6 @@ public class ParseConnector {
             throw new WicoParseException();
         }
         return questions;
-
     }
 
     public ArrayList<Answer> getAnswersForQuestion(String questionId) {

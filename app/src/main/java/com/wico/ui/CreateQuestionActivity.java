@@ -48,7 +48,9 @@ public class CreateQuestionActivity extends AppCompatActivity {
     private void startUiElements() {
         spinner = (ProgressBar) findViewById(R.id.savingQuestionProgressBar);
         title = (EditText) findViewById(R.id.titleEditText);
+        title.setText(getIntent().getStringExtra("title"));
         content = (EditText) findViewById(R.id.contentEditText);
+        content.setText(getIntent().getStringExtra("content"));
         sendButton = (FloatingActionButton) findViewById(R.id.fab);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

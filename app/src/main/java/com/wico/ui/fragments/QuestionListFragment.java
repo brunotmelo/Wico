@@ -24,7 +24,6 @@ import com.wico.R;
 import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
 import com.wico.ui.CreateQuestionActivity;
-import com.wico.ui.EditQuestionActivity;
 import com.wico.ui.QuestionAndAnswersActivity;
 import com.wico.ui.adapters.QuestionListAdapter;
 import com.wico.ui.threads.NetworkChecker;
@@ -147,7 +146,8 @@ public class QuestionListFragment extends ActivityFabOverriderFragment implement
         Question question = (Question)questionAdapter.getItem(position);
         intent.putExtra("questionId", question.getObjectId());
         intent.putExtra("title",question.getTitle());
-        intent.putExtra("content",question.getContent());
+        intent.putExtra("content", question.getContent());
+        intent.putExtra("author",question.getAuthor());
         startActivity(intent);
     }
 
@@ -202,10 +202,18 @@ public class QuestionListFragment extends ActivityFabOverriderFragment implement
         }
     }
 
-    private void editQuestion(Question question) {
-        String editableTitle = question.getTitle();
-        String editableContent = question.getContent();
-        Intent intent = new Intent(getContext(), EditQuestionActivity.class);
-        intent.putExtra()
+    private void editQuestion(Question parseQuestion) {
+        String editableTitle = parseQuestion.getTitle();
+        String editableContent = parseQuestion.getContent();
+        String parentId = parseQuestion.getParentID();
+        String author = parseQuestion.getAuthor();
+        Intent intent = new Intent(getContext(), CreateQuestionActivity.class);
+        intent.putExtra("title", editableTitle);
+        intent.putExtra("content", editableContent);
+        intent.putExtra("parentPageId", parentId);
+        intent.putExtra("author", author);
+        startActivity(intent);
     }
+
+
 }
