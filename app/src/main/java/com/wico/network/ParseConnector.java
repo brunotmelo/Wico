@@ -64,7 +64,7 @@ public class ParseConnector {
     }
 
     public ArrayList<WicoPage> getChildrenPages(String parentId){
-        return null;
+        return retriever.getChildrenPages(parentId);
     }
 
     public ArrayList<Answer> getAnswersForQuestion(String questionId) {

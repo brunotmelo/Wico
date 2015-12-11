@@ -29,7 +29,6 @@ public class PageViewFragment extends ActivityFabOverriderFragment {
     private String wicoPageId;
     private WicoPage page;
     private boolean loading = false;
-    //private boolean editing = false;
 
     private TextView pageContent;
     private EditText editPageContent;
@@ -122,6 +121,7 @@ public class PageViewFragment extends ActivityFabOverriderFragment {
     //callBack
     private void pageLoaded(WicoPage page){
         this.page = page;
+        System.out.println(page.getTitle());
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -189,9 +189,7 @@ public class PageViewFragment extends ActivityFabOverriderFragment {
                 Toast.makeText(getActivity(), "An error ocurred while updating the page", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-
 
     private void lockUi(){
         editPageContent.setEnabled(false);

@@ -11,6 +11,8 @@ import com.wico.network.interfaces.ParseObjectRetriever;
 import java.util.ArrayList;
 
 public class OnlineParseObjectRetriever implements ParseObjectRetriever {
+
+
     @Override
     public WicoPage getPage(String id) {
         ParseQuery<WicoPage> query = createPageQuery(id);
@@ -48,6 +50,19 @@ public class OnlineParseObjectRetriever implements ParseObjectRetriever {
     }
 
     @Override
+    public ArrayList<WicoPage> getChildrenPages(String parentId) {
+        ParseQuery<WicoPage> query = createChildrenPagesQuery(parentId);
+        ArrayList<WicoPage> wicoPages = new ArrayList<>();
+        try {
+            wicoPages.addAll(query.find());
+        } catch (ParseException e) {
+            throw new WicoParseException();
+        }
+        return wicoPages;
+    }
+
+
+    @Override
     public Question getQuestion(String questionId){
         ParseQuery<Question> query = createQuestionQuery(questionId);
         Question question = null;
@@ -59,16 +74,21 @@ public class OnlineParseObjectRetriever implements ParseObjectRetriever {
         return question;
     }
 
-
-    private ParseQuery<WicoPage> createPageQuery(String pagePath){
+    private ParseQuery<WicoPage> createPageQuery(String pageId){
         ParseQuery<WicoPage> query = ParseQuery.getQuery(WicoPage.class);
-        query.whereEqualTo("path", pagePath);
+        query.whereEqualTo("objectId", pageId);
         return query;
     }
 
-    private ParseQuery<Question> createQuestionsQuery(String pagePath) {
+    private ParseQuery<WicoPage> createChildrenPagesQuery(String wicoPageId) {
+        ParseQuery<WicoPage> query = ParseQuery.getQuery(WicoPage.class);
+        query.whereEqualTo("parentId",wicoPageId);
+        return query;
+    }
+
+    private ParseQuery<Question> createQuestionsQuery(String pageId) {
         ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
-        query.whereEqualTo("parentPath", pagePath);
+        query.whereEqualTo("parentId", pageId);
         query.whereExists("content");
         query.orderByDescending("createdAt");
         return query;

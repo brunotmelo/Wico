@@ -15,4 +15,6 @@ public interface ParseObjectRetriever {
     public ArrayList<Question> getQuestions(String parentPageId);
 
     public ArrayList<Answer> getAnswersForQuestion(String questionId);
+
+    public ArrayList<WicoPage> getChildrenPages(String parentPageId);
 }

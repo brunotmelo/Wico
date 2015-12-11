@@ -40,11 +40,29 @@ public class OfflineParseObjectRetriever implements ParseObjectRetriever {
         return null;
     }
 
-    private ParseQuery<Question> createQuestionsQuery(String pagePath) {
+    @Override
+    public ArrayList<WicoPage> getChildrenPages(String parentPageId) {
+        ParseQuery<WicoPage> query = createChildrenPagesQuery(parentPageId);
+        ArrayList<WicoPage> wicoPages = new ArrayList<>();
+        try {
+            wicoPages.addAll(query.find());
+        } catch (ParseException e) {
+            throw new WicoParseException();
+        }
+        return wicoPages;
+    }
+
+    private ParseQuery<Question> createQuestionsQuery(String pageId) {
         ParseQuery<Question> query = ParseQuery.getQuery(Question.class);
-        query.whereEqualTo("parentPath", pagePath);
         query.fromLocalDatastore();
-        query.orderByDescending("createdAt");
+        query.whereEqualTo("parentId", pageId);
+        return query;
+    }
+
+    private ParseQuery<WicoPage> createChildrenPagesQuery(String wicoPageId) {
+        ParseQuery<WicoPage> query = ParseQuery.getQuery(WicoPage.class);
+        query.fromLocalDatastore();
+        query.whereEqualTo("parentId",wicoPageId);
         return query;
     }
 
@@ -55,6 +73,7 @@ public class OfflineParseObjectRetriever implements ParseObjectRetriever {
 
         return query;
     }
+
 
 
 

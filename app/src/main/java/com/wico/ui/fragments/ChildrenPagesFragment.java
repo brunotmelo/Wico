@@ -104,6 +104,7 @@ public class ChildrenPagesFragment extends ActivityFabOverriderFragment implemen
         });
         loading = false;
     }
+
     public void loadWicoPages() {
         ParseConnector parseConnector = new ParseConnector();
         ArrayList<WicoPage> childrenList = parseConnector.getChildrenPages(parentPageId);
