@@ -15,7 +15,14 @@ public class OfflineParseObjectRetriever implements ParseObjectRetriever {
 
     @Override
     public WicoPage getPage(String id) {
-        return new WicoPage.Builder().title("testing page").content("markdown").parentId("/").build();
+        ParseQuery<WicoPage> query = createPageQuery(id);
+        WicoPage page;
+        try {
+            page = query.getFirst();
+        } catch (ParseException e){
+            throw new WicoParseException();
+        }
+        return page;
     }
 
     @Override
@@ -50,6 +57,13 @@ public class OfflineParseObjectRetriever implements ParseObjectRetriever {
             throw new WicoParseException();
         }
         return wicoPages;
+    }
+
+    private ParseQuery<WicoPage> createPageQuery(String pageId){
+        ParseQuery<WicoPage> query = ParseQuery.getQuery(WicoPage.class);
+        query.fromLocalDatastore();
+        query.whereEqualTo("objectId", pageId);
+        return query;
     }
 
     private ParseQuery<Question> createQuestionsQuery(String pageId) {

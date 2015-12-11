@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.parse.ParseException;
 import com.wico.R;
 import com.wico.datatypes.WicoPage;
 import com.wico.network.ParseConnector;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -84,6 +86,15 @@ public class CreatePageTest {
             equals = true;
         }
         return equals;
+    }
+
+    @After
+    public void clean(){
+        try {
+            WicoPage.unpinAll();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 }
