@@ -77,6 +77,10 @@ public final class Question extends ParseObject{
         return getString("author");
     }
 
+    public String getParentId() {
+        return getString("parentId");
+    }
+
     public int getNumberOfAnswers(){
         return getInt("numOfAnswers");
     }

@@ -35,14 +35,14 @@ public class WicoPageTest {
             "Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., \"it's all\n" +
             "in chapters 12--14\"). Three dots ... will be converted to an ellipsis.\n" +
             "Unicode is supported. ☺";
-    private static final String PAGE_PATH = "/testPath";
+    private static final String PAGE_ID = "/ideda";
 
     @Before
     public void initializePage(){
         // although we are not using the internet,
         // the parse API requires registering the classes before using
         ParseObject.registerSubclass(WicoPage.class);
-        page = new WicoPage.Builder().title(PAGE_TITLE).content(PAGE_CONTENT).path(PAGE_PATH).build();
+        page = new WicoPage.Builder().title(PAGE_TITLE).content(PAGE_CONTENT).parentId(PAGE_ID).build();
     }
 
     @Test
@@ -61,8 +61,8 @@ public class WicoPageTest {
 
     @Test
     public void testSavedPagePath(){
-        final String expected = PAGE_PATH;
-        final String reality = page.getString("path");
+        final String expected = PAGE_ID;
+        final String reality = page.getParentId();
         assertEquals(expected,reality);
     }
 
