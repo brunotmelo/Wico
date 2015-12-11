@@ -1,9 +1,11 @@
 package com.wico.ui.fragments;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,18 +153,10 @@ public class PageViewFragment extends ActivityFabOverriderFragment {
         overrideFabToEditing();
     }
 
-    private void saveEdit(){
-        //TODO: fire dialog that confirms changes
-        lockUi();
-        page.updateContent(editPageContent.getText().toString());
-        WicoPageSaver thread = new WicoPageSaver(page,savedListener);
-        thread.setUncaughtExceptionHandler(notSavedListener);
-        thread.start();
-    }
-
     //callback
     private void pageUpdated(){
         getActivity().runOnUiThread(new Runnable() {
+
             @Override
             public void run() {
                 finishEdit();
@@ -191,7 +185,29 @@ public class PageViewFragment extends ActivityFabOverriderFragment {
         });
 
     }
+    
+    private void saveEdit(){
+        lockUi();
+        page.updateContent(editPageContent.getText().toString());
+        WicoPageSaver thread = new WicoPageSaver(page,savedListener);
+        thread.setUncaughtExceptionHandler(notSavedListener);
+        thread.start();
+    }
 
+    private void alertView(String message) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setTitle("Hello").setIcon(R.drawable.ic_send).setMessage(message).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialoginterface, int i) {
+                        dialoginterface.cancel();
+
+                    }})
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialoginterface, int i) {
+
+                    }
+                }
+                ).show();
+    }
 
     private void lockUi(){
         editPageContent.setEnabled(false);
