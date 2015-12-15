@@ -18,9 +18,11 @@ Right Click the test package and select run
 ![unit2](https://cloud.githubusercontent.com/assets/12036602/11738980/c80fb306-9fb5-11e5-8532-78bb60e6088e.png)
 
 ####Android tests
+**You need an Android device to run these tests. Google [recommends](https://google.github.io/android-testing-support-library/docs/espresso/setup/) to disable the animations on the device before running the tests.
+(Under Settings -> Developers settings, disable Window animation scale, Transition animation scale and Animator duration scale)
 * Select Android Instrumentation Tests under Build Variants. 
 * Select the test you wish to run under ui.
-(You need an Android emulator for these tests)
+
 ![android1](https://cloud.githubusercontent.com/assets/12036602/11739042/58c17fce-9fb6-11e5-8995-946e23453652.png)
 
 
