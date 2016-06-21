@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +21,7 @@ import com.wico.datatypes.Question;
 import com.wico.network.ParseConnector;
 
 
-public class LoginSignupActivity extends Activity{
+public class LoginSignupActivity extends AppCompatActivity {
 
         Button loginbutton;
         Button signup;
@@ -33,6 +35,11 @@ public class LoginSignupActivity extends Activity{
             super.onCreate(savedInstanceState);
             connectToParse();
             setContentView(R.layout.login_activity);
+
+            Toolbar mActionBarToolbar = (Toolbar) findViewById(R.id.login_toolbar);
+            setSupportActionBar(mActionBarToolbar);
+            String loginTitle = getResources().getString(R.string.wico_login);
+            getSupportActionBar().setTitle(loginTitle);
 
             username = (EditText) findViewById(R.id.username);
             password = (EditText) findViewById(R.id.password);

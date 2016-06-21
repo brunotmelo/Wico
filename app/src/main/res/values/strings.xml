@@ -25,7 +25,7 @@
 <!-- Create Page Strings -->
     <string name="cp_title">Title</string>
     <string name="cp_content">Content</string>
-
+    <string name="wico_login">Wico - Login</string>
 
 
 </resources>

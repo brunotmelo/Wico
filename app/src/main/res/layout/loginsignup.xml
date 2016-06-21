@@ -6,10 +6,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:padding="10dip"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/login_activity"
-    tools:context="com.wico.ui.LoginSignupActivity">
+    tools:context="com.wico.ui.LoginSignupActivity"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="100dp"
+    android:paddingBottom="16dp">
 
 
     <TextView
@@ -48,31 +51,34 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:background="@drawable/buttonshape"
-        android:textColor="#FFFFFF"
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/password"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:padding="16dp">
 
+        <Button
+            android:id="@+id/login"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="#FFFFFF"
+            android:theme="@style/AppTheme.Button.Colored"
+            android:elevation="1dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Signup"
-        android:background="@drawable/buttonshape"
-        android:textColor="#FFFFFF"
-
-        android:layout_below="@+id/login"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <Button
+            android:id="@+id/signup"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Signup"
+            android:theme="@style/AppTheme.Button"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 
 
 </RelativeLayout>
