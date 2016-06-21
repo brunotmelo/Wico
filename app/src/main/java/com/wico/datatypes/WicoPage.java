@@ -51,6 +51,10 @@ public class WicoPage extends ParseObject {
         return getString("content");
     }
 
+    public String getParentId(){
+        return getString("parentId");
+    }
+
     public void updateContent(String content){
         put("content",content);
     }

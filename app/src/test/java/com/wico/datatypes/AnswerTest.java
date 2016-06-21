@@ -19,7 +19,7 @@ public class AnswerTest {
     @Before
     public void initializeAnswer(){
         ParseObject.registerSubclass(Answer.class);
-        answer = new Answer.Builder().content(ANSWER_CONTENT).parentQuestionId(QUESTION_PARENT_ID).build();
+        answer = new Answer.Builder().content(ANSWER_CONTENT).parentQuestionId(QUESTION_PARENT_ID).author(ANSWER_AUTHOR).build();
     }
 
     @Test
